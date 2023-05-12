@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Concrete\" />
+    <Folder Include="Abstract\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="VehicleTender.Entity">
+      <HintPath>..\..\VehicleTender\VehicleTender.Entity\bin\Debug\VehicleTender.Entity.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
