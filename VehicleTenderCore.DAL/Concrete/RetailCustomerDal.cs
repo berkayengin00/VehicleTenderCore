@@ -9,6 +9,7 @@ using VehicleTender.Entity.View;
 using VehicleTenderCore.DAL.Abstract;
 using VehicleTenderCore.DAL.Context;
 using VehicleTenderCore.Entities.View;
+using VehicleTenderCore.Entities.View.RetailCustomer;
 
 namespace VehicleTenderCore.DAL.Concrete
 {
@@ -31,6 +32,11 @@ namespace VehicleTenderCore.DAL.Concrete
                               UserType = (int)UserTypeEnum.Retired
                           }).SingleOrDefault();
             return result;
+        }
+
+        public void Register(RetailCustomerRegisterVM vm)
+        {
+
         }
     }
 }
