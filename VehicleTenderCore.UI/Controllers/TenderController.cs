@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using VehicleTender.Entity.View;
-using VehicleTenderCore.Core.SessionExtensions;
 using VehicleTenderCore.Entities.View;
 using VehicleTenderCore.Entities.View.Tender;
 using VehicleTenderCore.UI.Extensions;

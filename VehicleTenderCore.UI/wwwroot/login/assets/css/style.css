@@ -52,15 +52,6 @@ textarea {
   outline: none; 
 }
 
-.form-02-main{
-  background:url(/login/assets/images/araba.jpg);
-  background-size:cover;
-  background-repeat:no-repeat;
-  background-position:center;
-  position:relative;
-  z-index:2;
-  overflow:hidden;
-}
 
 ._lk_de{
   

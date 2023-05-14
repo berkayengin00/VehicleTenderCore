@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using VehicleTenderCore.Core.SessionExtensions;
 using VehicleTenderCore.Entities.View;
+using VehicleTenderCore.UI.Extensions;
 using VehicleTenderCore.UI.Providers;
 
 namespace VehicleTenderCore.UI.Controllers

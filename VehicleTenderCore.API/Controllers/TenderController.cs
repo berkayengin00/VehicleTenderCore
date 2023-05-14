@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VehicleTenderCore.BLL.Abstract;
-using VehicleTenderCore.Core.SessionExtensions;
 using VehicleTenderCore.Entities.View;
 
 namespace VehicleTenderCore.API.Controllers

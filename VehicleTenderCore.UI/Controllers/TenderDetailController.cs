@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using VehicleTender.Entity.View;
 using VehicleTenderCore.BLL.Abstract;
-using VehicleTenderCore.Core.SessionExtensions;
 using VehicleTenderCore.Entities.View;
 using VehicleTenderCore.Entities.View.Tender;
 using VehicleTenderCore.Entities.View.TenderDetail;
@@ -12,46 +13,59 @@ using VehicleTenderCore.UI.Providers;
 
 namespace VehicleTenderCore.UI.Controllers
 {
-    public class TenderDetailController : Controller
-    {
-        private readonly VehicleApiProvider _vehicleApiProvider;
-        public TenderDetailController(VehicleApiProvider vehicleApiProvider)
-        {
-            _vehicleApiProvider = vehicleApiProvider;
-        }
-        [HttpGet]
-        public IActionResult Add()
-        {
+	public class TenderDetailController : Controller
+	{
+		private readonly VehicleApiProvider _vehicleApiProvider;
+		private readonly TenderDetailApiProvider _tenderDetailApiProvider;
+		public TenderDetailController(VehicleApiProvider vehicleApiProvider, TenderDetailApiProvider tenderDetailApiProvider)
+		{
+			_vehicleApiProvider = vehicleApiProvider;
+			_tenderDetailApiProvider = tenderDetailApiProvider;
+		}
 
-            TenderDetailAddVM result = new TenderDetailAddVM()
-            {
-                Vehicles = _vehicleApiProvider.VehicleGetAll(GetUserId()).Result.Data
-            };
-            return View(result);
-        }
+		[HttpGet]
+		public IActionResult Add()
+		{
 
-        [HttpPost]
-        public IActionResult Add(string jsonData)
-        {
-	        var test = TempData.Get<TenderAddVM>("tender");
-            // tempdata da tender varsa devam et
-            if (TempData.TryGetValue("tender",out object value))
-            {
-                value = TempData["tender"] as TenderAddVM;
+			TenderDetailAddVM result = new TenderDetailAddVM()
+			{
+				Vehicles = _vehicleApiProvider.VehicleGetAll(GetUserId()).Result.Data
+			};
+			return View(result);
+		}
 
-                var data = JsonConvert.DeserializeObject<List<TenderDetailAddVM>>(jsonData);
-                new TenderAndDetailsVM()
-                {
-                    TenderAddVM = TempData["tender"] as TenderAddVM,
-                    TenderDetailAddVM = data
-                };
-            }
-            return View();
-        }
 
-        public int GetUserId()
-        {
-            return SessionExtension.MySessionGet<SessionVMForUser>(HttpContext.Session,"user").UserId;
-        }
-    }
+		[HttpGet]
+		public async Task<IActionResult> GetByTenderId(int tenderId)
+		{
+			var result = await _tenderDetailApiProvider.TenderDetailsGet(tenderId);
+			
+			return View(result.Data);
+		}
+
+
+		[HttpPost]
+		public IActionResult Add(string jsonData)
+		{
+			var test = TempData.Get<TenderAddVM>("tender");
+			// tempdata da tender varsa devam et
+			if (TempData.TryGetValue("tender", out object value))
+			{
+				value = TempData["tender"] as TenderAddVM;
+
+				var data = JsonConvert.DeserializeObject<List<TenderDetailAddVM>>(jsonData);
+				new TenderAndDetailsVM()
+				{
+					TenderAddVM = TempData["tender"] as TenderAddVM,
+					TenderDetailAddVM = data
+				};
+			}
+			return View();
+		}
+
+		public int GetUserId()
+		{
+			return SessionExtension.MySessionGet<SessionVMForUser>(HttpContext.Session, "user").UserId;
+		}
+	}
 }

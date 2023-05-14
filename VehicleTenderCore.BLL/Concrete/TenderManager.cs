@@ -7,12 +7,14 @@ using Microsoft.EntityFrameworkCore;
 using VehicleTender.Entity.Concrete;
 using VehicleTender.Entity.Enum;
 using VehicleTender.Entity.View;
+using VehicleTender.Entity.View.Tender;
 using VehicleTenderCore.BLL.Abstract;
 using VehicleTenderCore.Core.DataAccess.Repository;
 using VehicleTenderCore.DAL.Abstract;
 using VehicleTenderCore.DAL.Context;
 using VehicleTenderCore.Entities.View;
 using VehicleTenderCore.Entities.View.Tender;
+using VehicleTenderCore.Entities.View.TenderDetail;
 
 namespace VehicleTenderCore.BLL.Concrete
 {
@@ -43,6 +45,11 @@ namespace VehicleTenderCore.BLL.Concrete
         public void TenderAndDetailsAdd(TenderAndDetailsVM tenderAndDetailsVM)
         {
             throw new NotImplementedException();
+        }
+
+        public TenderDetailListVM GetTenderDetail(int tenderId)
+        {
+	        return _tenderDal.GetTenderDetail(tenderId);
         }
     }
 }

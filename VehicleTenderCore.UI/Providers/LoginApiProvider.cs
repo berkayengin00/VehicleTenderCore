@@ -3,7 +3,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using VehicleTenderCore.Core.SessionExtensions;
 using VehicleTenderCore.Entities.View;
 using VehicleTenderCore.UI.Providers.BaseType;
 
