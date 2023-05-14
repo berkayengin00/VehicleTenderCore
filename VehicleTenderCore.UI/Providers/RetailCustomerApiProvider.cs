@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using VehicleTenderCore.Entities.View;
+using VehicleTenderCore.Entities.View.RetailCustomer;
 using VehicleTenderCore.UI.Providers.BaseType;
 
 namespace VehicleTenderCore.UI.Providers
@@ -15,11 +16,9 @@ namespace VehicleTenderCore.UI.Providers
             _httpClient = client;
         }   
 
-        public async Task<GeneralType> CheckRetailCustomerAsync(RetailCustomerLoginVM vm)
+        public async Task<GeneralType> RegisterAsync(RetailCustomerRegisterVM vm)
         {
-            var result = await _httpClient.PostAsync("Login/LoginRetail", new StringContent(JsonConvert.SerializeObject(vm), Encoding.UTF8, "application/json"));
-
-            var data = JsonConvert.DeserializeObject<SessionVMForUser>(await result.Content.ReadAsStringAsync());
+            var result = await _httpClient.PostAsync("RetailCustomer/Register", new StringContent(JsonConvert.SerializeObject(vm), Encoding.UTF8, "application/json"));
 
             return new GeneralType(result.RequestMessage?.ToString(), result.StatusCode);
         }

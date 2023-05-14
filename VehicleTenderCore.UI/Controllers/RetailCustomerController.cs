@@ -1,10 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Net;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using VehicleTenderCore.Entities.View.RetailCustomer;
+using VehicleTenderCore.UI.Providers;
 
 namespace VehicleTenderCore.UI.Controllers
 {
     public class RetailCustomerController : Controller
     {
+        private readonly RetailCustomerApiProvider _retailCustomerApiProvider;
+        public RetailCustomerController(RetailCustomerApiProvider retailCustomerApiProvider)
+        {
+            _retailCustomerApiProvider = retailCustomerApiProvider;
+        }
+
         [HttpGet]
         public IActionResult Register()
         {
@@ -12,13 +21,16 @@ namespace VehicleTenderCore.UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(RetailCustomerRegisterVM vm)
+        public async Task<IActionResult> Register(RetailCustomerRegisterVM vm)
         {
-            if (ModelState.IsValid)
+            var result =  await _retailCustomerApiProvider.RegisterAsync(vm);
+
+            if (result.StatusCode==HttpStatusCode.OK)
             {
-                
+                 return RedirectToAction("Login","Login");
             }
-            return View();
+
+            return BadRequest(result.Message);
         }   
     }
 }

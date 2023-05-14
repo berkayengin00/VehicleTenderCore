@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using VehicleTenderCore.BLL.Abstract;
 using VehicleTenderCore.DAL.Abstract;
 using VehicleTenderCore.Entities.View;
 using VehicleTenderCore.Entities.View.RetailCustomer;
@@ -11,18 +12,17 @@ namespace VehicleTenderCore.API.Controllers
     [ApiController]
     public class RetailCustomerController : ControllerBase
     {
-        private readonly IRetailCustomerDal _retailCustomerDal;
-        public RetailCustomerController(IRetailCustomerDal retailCustomerDal)
+        private readonly IRetailCustomerService _retailCustomerService;
+        public RetailCustomerController(IRetailCustomerService retailCustomerService)
         {
-            _retailCustomerDal = retailCustomerDal;
+            _retailCustomerService = retailCustomerService;
         }
 
-
-        [HttpPost]
+        [HttpPost("register")]
         public IActionResult Register([FromBody] RetailCustomerRegisterVM vm)
         {
-            _retailCustomerDal.Register(vm);
+            _retailCustomerService.Register(vm);
             return Ok();
-        }   
+        }
     }
 }

@@ -5,11 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\VehicleTenderCore.BLL\VehicleTenderCore.BLL.csproj" />
+    <ProjectReference Include="..\VehicleTenderCore.Core\VehicleTenderCore.Core.csproj" />
     <ProjectReference Include="..\VehicleTenderCore.Entities\VehicleTenderCore.Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="VehicleTender.Entity">
+      <HintPath>..\..\VehicleTender\VehicleTender.Entity\bin\Debug\VehicleTender.Entity.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

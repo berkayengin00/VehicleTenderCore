@@ -28,7 +28,7 @@ namespace VehicleTenderCore.Entities.View.RetailCustomer
         public int CreatedBy { get; set; }
         public int UpdatedBy { get; set; }
         [DisplayName("Eklenme Tarihi")]
-        public DateTime AddedDate { get; set; }=DateTime.Now;
+        public DateTime CreatedDate { get; set; }=DateTime.Now;
         [DisplayName("Değişiklik Tarihi")]
         public DateTime UpdatedDate { get; set; } = DateTime.Now;
     }

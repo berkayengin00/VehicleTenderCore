@@ -1,124 +1,147 @@
 ﻿@{
 	Layout = "_LoginLayout";
 }
-
-@using Microsoft.AspNetCore.Razor.TagHelpers
-
 @model (RetailCustomerLoginVM,CorporateCustomerLoginVM)
 
-
-<div class="d-flex justify-content-center align-items-center mt-5">
-
-	<div class="card">
-
-		<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-			<li class="nav-item text-center">
-				<a class="nav-link active btl" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Bireysel Müşteri</a>
-			</li>
-			<li class="nav-item text-center">
-				<a class="nav-link btr" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Kurumsal Müşteri</a>
-			</li>
-		</ul>
-		<div class="tab-content" id="pills-tabContent">
-			<div class="card-header text-center">
-				<a href="../../index2.html" class="h1"><b>Araç </b>İhale</a>
-			</div>
-			<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-
-				<div class="card card-outline card-primary">
-
-					<form asp-action="LoginRetail" asp-controller="Login" method="post">
+<section class="form-02-main" style="background:url(/login/assets/images/araba.jpg);  background-size:cover;
+  background-repeat:no-repeat;
+  background-position:center;
+  position:relative;
+  z-index:2;
+  overflow:hidden;">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="_lk_de">
+					<div class="form-03-main">
 						<div class="card-body">
-							<p class="login-box-msg">Admin için giriş ekranı</p>
+							<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+								<li class="nav-item text-center">
+									<a class="nav-link active btl" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Bireysel Müşteri</a>
+								</li>
+								<li class="nav-item text-center">
+									<a class="nav-link btr" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Kurumsal Müşteri</a>
+								</li>
+							</ul>
+							<div class="tab-content" id="pills-tabContent">
+								<div class="card-header text-center">
+									<a href="../../index2.html" class="h1"><b>Araç </b>İhale</a>
+								</div>
+								<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+
+									<div class="card card-outline card-primary">
+
+										<form asp-action="LoginRetail" asp-controller="Login" method="post">
+											<div class="card-body">
+												<p class="login-box-msg">Admin için giriş ekranı</p>
 
 
-							<div class="input-group mb-3">
-								<input asp-for="@Model.Item1.Email" name="Email" type="email" placeholder="email giriniz" required="true" class="form-control"/>
-								<div class="input-group-append">
-									<div class="input-group-text">
-										<span class="fas fa-envelope"></span>
+												<div class="input-group mb-3">
+													<input asp-for="@Model.Item1.Email" name="Email" type="email" placeholder="email giriniz" required="true" class="form-control" />
+													<div class="input-group-append">
+														<div class="input-group-text">
+															<span class="fas fa-envelope"></span>
+														</div>
+													</div>
+												</div>
+												<div class="input-group mb-3">
+													<input asp-for="@Model.Item1.Password" name="Password" type="password" placeholder="parola giriniz" required="true" class="form-control" />
+													<div class="input-group-append">
+														<div class="input-group-text">
+															<span class="fas fa-lock"></span>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-8">
+														@*<input asp-for="fgh" type="checkbox" value="Beni Hatırla" required="true" class="form-control"/>*@
+														<label for="remember">
+															Beni Hatırla
+														</label>
+													</div>
+													<!-- /.col -->
+													<div class="col-4">
+														<button type="submit" class="btn btn-primary btn-block">Giriş Yap</button>
+													</div>
+													<!-- /.col -->
+												</div>
+
+												<p class="mb-1">
+													<a href="forgot-password.html">Şifremi Unuttum</a>
+												</p>
+												<p class="mb-0">
+													<a href="@Url.Action("Register","RetailCustomer")" class="text-center">Kayıt Ol</a>
+												</p>
+											</div>
+										</form>
+
+										<!-- /.card-body -->
 									</div>
 								</div>
-							</div>
-							<div class="input-group mb-3">
-								<input asp-for="@Model.Item1.Password" name="Password" type="password" placeholder="parola giriniz" required="true" class="form-control"/>
-								<div class="input-group-append">
-									<div class="input-group-text">
-										<span class="fas fa-lock"></span>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-8">
-									@*<input asp-for="fgh" type="checkbox" value="Beni Hatırla" required="true" class="form-control"/>*@
-									<label for="remember">
-										Beni Hatırla
-									</label>
-								</div>
-								<!-- /.col -->
-								<div class="col-4">
-									<button type="submit" class="btn btn-primary btn-block">Giriş Yap</button>
-								</div>
-								<!-- /.col -->
-							</div>
-
-							<p class="mb-1">
-								<a href="forgot-password.html">Şifremi Unuttum</a>
-							</p>
-							<p class="mb-0">
-								<a href="@Url.Action("Register","RetailCustomer")" class="text-center">Kayıt Ol</a>
-							</p>
-						</div>
-					</form>
-
-					<!-- /.card-body -->
-				</div>
-			</div>
-			<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-				<form asp-action="LoginCorporate" asp-controller="Login" method="post">
-					<div class="card-body">
-						<p class="login-box-msg">Admin için giriş ekranı</p>
+								<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+									<form asp-action="LoginCorporate" asp-controller="Login" method="post">
+										<div class="card-body">
+											<p class="login-box-msg">Admin için giriş ekranı</p>
 
 
-						<div class="input-group mb-3">
-							<input asp-for="@Model.Item2.Email" name="Email" type="email" placeholder="email giriniz" required="true" class="form-control"/>
-							<div class="input-group-append">
-								<div class="input-group-text">
-									<span class="fas fa-envelope"></span>
-								</div>
-							</div>
-						</div>
-						<div class="input-group mb-3">
-							<input asp-for="@Model.Item2.Password" name="Password" type="password" placeholder="parola giriniz" required="true" class="form-control"/>
-							<div class="input-group-append">
-								<div class="input-group-text">
-									<span class="fas fa-lock"></span>
+											<div class="input-group mb-3">
+												<input asp-for="@Model.Item2.Email" name="Email" type="email" placeholder="email giriniz" required="true" class="form-control" />
+												<div class="input-group-append">
+													<div class="input-group-text">
+														<span class="fas fa-envelope"></span>
+													</div>
+												</div>
+											</div>
+											<div class="input-group mb-3">
+												<input asp-for="@Model.Item2.Password" name="Password" type="password" placeholder="parola giriniz" required="true" class="form-control" />
+												<div class="input-group-append">
+													<div class="input-group-text">
+														<span class="fas fa-lock"></span>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-8">
+													@*<input asp-for="fgh" type="checkbox" value="Beni Hatırla" required="true" class="form-control"/>*@
+													<label for="remember">
+														Beni Hatırla
+													</label>
+												</div>
+												<!-- /.col -->
+												<div class="col-4">
+													<button type="submit" class="btn btn-primary btn-block">Giriş Yap</button>
+												</div>
+												<!-- /.col -->
+											</div>
+
+											<p class="mb-1">
+												<a href="forgot-password.html">Şifremi Unuttum</a>
+											</p>
+											<p class="mb-0">
+												<a href="register.html" class="text-center">Kayıt Ol</a>
+											</p>
+										</div>
+									</form>
 								</div>
 							</div>
 						</div>
-						<div class="row">
-							<div class="col-8">
-								@*<input asp-for="fgh" type="checkbox" value="Beni Hatırla" required="true" class="form-control"/>*@
-								<label for="remember">
-									Beni Hatırla
-								</label>
-							</div>
-							<!-- /.col -->
-							<div class="col-4">
-								<button type="submit" class="btn btn-primary btn-block">Giriş Yap</button>
-							</div>
-							<!-- /.col -->
-						</div>
 
-						<p class="mb-1">
-							<a href="forgot-password.html">Şifremi Unuttum</a>
-						</p>
-						<p class="mb-0">
-							<a href="register.html" class="text-center">Kayıt Ol</a>
-						</p>
+						<div class="form-group nm_lk"><p>Or Login With</p></div>
+
+						<div class="form-group pt-0">
+							<div class="_social_04">
+								<ol>
+									<li><i class="fa fa-facebook"></i></li>
+									<li><i class="fa fa-twitter"></i></li>
+									<li><i class="fa fa-google-plus"></i></li>
+									<li><i class="fa fa-instagram"></i></li>
+									<li><i class="fa fa-linkedin"></i></li>
+								</ol>
+							</div>
+						</div>
 					</div>
-				</form>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
+</section>

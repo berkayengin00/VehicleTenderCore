@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\VehicleTenderCore.BLL\VehicleTenderCore.BLL.csproj" />
     <ProjectReference Include="..\VehicleTenderCore.DAL\VehicleTenderCore.DAL.csproj" />
   </ItemGroup>
 

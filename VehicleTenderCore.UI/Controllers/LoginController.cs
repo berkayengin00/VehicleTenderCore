@@ -1,6 +1,8 @@
 ﻿using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using VehicleTenderCore.Core.SessionExtensions;
 using VehicleTenderCore.Entities.View;
 using VehicleTenderCore.UI.Providers;
 
@@ -26,7 +28,9 @@ namespace VehicleTenderCore.UI.Controllers
             var user = await _loginApiProvider.CheckRetailCustomerAsync(vm);
             if (user.StatusCode == HttpStatusCode.OK)
             {
-                return RedirectToAction("Login");
+                SessionExtension.MySessionSet(HttpContext.Session, "user", user.Data);
+                var rest = SessionExtension.MySessionGet<SessionVMForUser>(HttpContext.Session, "user");
+                return RedirectToAction("Index","Tender");
             }
 
             return BadRequest(user.Message);
@@ -39,7 +43,8 @@ namespace VehicleTenderCore.UI.Controllers
             var user = await _loginApiProvider.CheckCorporateCustomerAsync(vm);
             if (user.StatusCode == HttpStatusCode.OK)
             {
-                return RedirectToAction("Login");
+                SessionExtension.MySessionSet(HttpContext.Session, "user", user.Data);
+                return RedirectToAction("Index", "Tender");
             }
 
             return BadRequest(user.Message);

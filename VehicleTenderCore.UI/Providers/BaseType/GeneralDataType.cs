@@ -8,7 +8,7 @@ namespace VehicleTenderCore.UI.Providers.BaseType
 
         public GeneralDataType(string message, HttpStatusCode statusCode,T data):base(message,statusCode)
         {
-            Message = message;
+            Data = data;
         }
     }
 

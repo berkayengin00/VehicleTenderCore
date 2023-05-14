@@ -72,16 +72,43 @@ namespace VehicleTenderCore.DAL.Context
             modelBuilder.ApplyConfiguration(new BrandConfiguration());
             modelBuilder.ApplyConfiguration(new BuyNowConfiguration());
             modelBuilder.ApplyConfiguration(new ChatBotConfiguration());
+            modelBuilder.ApplyConfiguration(new ChatBotUserConfiguration());
+            modelBuilder.ApplyConfiguration(new CorporatePackageConfiguration());
+            modelBuilder.ApplyConfiguration(new ColorConfiguration());
             modelBuilder.ApplyConfiguration(new RetailVehiclePurchaseStatusConfiguration());
+            modelBuilder.ApplyConfiguration(new CommissionFeeConfiguration());
+            modelBuilder.ApplyConfiguration(new CorporateCustomerConfiguration());
+            modelBuilder.ApplyConfiguration(new ExpertiseConfiguration());
+            modelBuilder.ApplyConfiguration(new FuelTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new GearTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new MessageConfiguration());
+            modelBuilder.ApplyConfiguration(new NotaryFeeConfiguration());
             modelBuilder.ApplyConfiguration(new RetailCustomerConfiguration());
+            modelBuilder.ApplyConfiguration(new RetailVehiclePurchaseConfiguration());
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
             modelBuilder.ApplyConfiguration(new RoleUserConfiguration());
+            modelBuilder.ApplyConfiguration(new StockConfiguration());
+            modelBuilder.ApplyConfiguration(new TenderConfiguration());
+            modelBuilder.ApplyConfiguration(new TenderHistoryConfiguration());
             modelBuilder.ApplyConfiguration(new UserTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new MenuRoleConfiguration());
+            modelBuilder.ApplyConfiguration(new TenderDetailConfiguration());
+            modelBuilder.ApplyConfiguration(new TramerConfiguration());
+            modelBuilder.ApplyConfiguration(new VehicleConfiguration());
+            modelBuilder.ApplyConfiguration(new VehicleBoughtAndSoldConfiguration());
+            modelBuilder.ApplyConfiguration(new VehicleImageConfiguration());
+            modelBuilder.ApplyConfiguration(new VehicleStatusConfiguration());
+            modelBuilder.ApplyConfiguration(new VehicleStatusHistoryConfiguration());
             modelBuilder.ApplyConfiguration(new VehicleTramerConfiguration());
-            modelBuilder.ApplyConfiguration(new CorporateCustomerConfiguration());
+            modelBuilder.ApplyConfiguration(new LogTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new LogDetailConfiguration());
             modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
-            
+            modelBuilder.ApplyConfiguration(new MenuRoleConfiguration());
+            modelBuilder.ApplyConfiguration(new MenuConfiguration());
+            modelBuilder.ApplyConfiguration(new VehiclePriceConfiguration());
+            modelBuilder.ApplyConfiguration(new VehiclePartStatusConfiguration());
+            modelBuilder.ApplyConfiguration(new ProvinceConfiguration());
+            modelBuilder.ApplyConfiguration(new DistrictConfiguration());
+
         }
     }
 }
