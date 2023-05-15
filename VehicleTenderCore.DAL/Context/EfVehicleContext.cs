@@ -10,8 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic.FileIO;
 using VehicleTender.Entity.Concrete;
 using VehicleTenderCore.DAL.Configurations;
-using static Microsoft.EntityFrameworkCore.Internal.AsyncLock;
-using Color = System.Drawing.Color;
+
 
 namespace VehicleTenderCore.DAL.Context
 {

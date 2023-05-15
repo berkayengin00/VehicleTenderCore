@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using VehicleTenderCore.BLL.Abstract;
 using VehicleTenderCore.BLL.Concrete;
+using VehicleTenderCore.BLL.Mapper;
 using VehicleTenderCore.DAL.Abstract;
 using VehicleTenderCore.DAL.Concrete;
 using VehicleTenderCore.UI.Providers;
@@ -49,7 +50,11 @@ namespace VehicleTenderCore.UI
             {
                 x.BaseAddress = new Uri(Configuration["apiBaseUrl"]);
             });
-
+            services.AddHttpClient<TenderHistoryApiProvider>(x =>
+            {
+                x.BaseAddress = new Uri(Configuration["apiBaseUrl"]);
+            });
+            services.AddHttpContextAccessor();
             services.AddSession(options =>
             {
                 options.Cookie.Name = "MyApp.Session";
@@ -57,6 +62,7 @@ namespace VehicleTenderCore.UI
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+            services.AddAutoMapper(typeof(TenderHistoryProfile));
             services.AddControllersWithViews();
         }
 

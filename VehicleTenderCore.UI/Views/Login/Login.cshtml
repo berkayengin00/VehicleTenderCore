@@ -33,7 +33,7 @@
 
 										<form asp-action="LoginRetail" asp-controller="Login" method="post">
 											<div class="card-body">
-												<p class="login-box-msg">Admin için giriş ekranı</p>
+												<p class="login-box-msg">Bireysel Müşteri Giriş Ekranı</p>
 
 
 												<div class="input-group mb-3">
@@ -53,12 +53,12 @@
 													</div>
 												</div>
 												<div class="row">
-													<div class="col-8">
-														@*<input asp-for="fgh" type="checkbox" value="Beni Hatırla" required="true" class="form-control"/>*@
+													@*<div class="col-8">
+														<input asp-for="fgh" type="checkbox" value="Beni Hatırla" required="true" class="form-control"/>
 														<label for="remember">
 															Beni Hatırla
 														</label>
-													</div>
+													</div>*@
 													<!-- /.col -->
 													<div class="col-4">
 														<button type="submit" class="btn btn-primary btn-block">Giriş Yap</button>
@@ -66,12 +66,12 @@
 													<!-- /.col -->
 												</div>
 
-												<p class="mb-1">
+@*												<p class="mb-1">
 													<a href="forgot-password.html">Şifremi Unuttum</a>
 												</p>
 												<p class="mb-0">
 													<a href="@Url.Action("Register","RetailCustomer")" class="text-center">Kayıt Ol</a>
-												</p>
+												</p>*@
 											</div>
 										</form>
 
@@ -81,7 +81,7 @@
 								<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
 									<form asp-action="LoginCorporate" asp-controller="Login" method="post">
 										<div class="card-body">
-											<p class="login-box-msg">Admin için giriş ekranı</p>
+											<p class="login-box-msg">Kurumsal Müşteri giriş ekranı</p>
 
 
 											<div class="input-group mb-3">
@@ -101,12 +101,12 @@
 												</div>
 											</div>
 											<div class="row">
-												<div class="col-8">
-													@*<input asp-for="fgh" type="checkbox" value="Beni Hatırla" required="true" class="form-control"/>*@
+												@*<div class="col-8">
+													<input asp-for="fgh" type="checkbox" value="Beni Hatırla" required="true" class="form-control"/>
 													<label for="remember">
 														Beni Hatırla
 													</label>
-												</div>
+												</div>*@
 												<!-- /.col -->
 												<div class="col-4">
 													<button type="submit" class="btn btn-primary btn-block">Giriş Yap</button>
@@ -114,19 +114,19 @@
 												<!-- /.col -->
 											</div>
 
-											<p class="mb-1">
+@*											<p class="mb-1">
 												<a href="forgot-password.html">Şifremi Unuttum</a>
 											</p>
 											<p class="mb-0">
 												<a href="register.html" class="text-center">Kayıt Ol</a>
-											</p>
+											</p>*@
 										</div>
 									</form>
 								</div>
 							</div>
 						</div>
 
-						<div class="form-group nm_lk"><p>Or Login With</p></div>
+@*						<div class="form-group nm_lk"><p>Or Login With</p></div>
 
 						<div class="form-group pt-0">
 							<div class="_social_04">
@@ -138,7 +138,7 @@
 									<li><i class="fa fa-linkedin"></i></li>
 								</ol>
 							</div>
-						</div>
+						</div>*@
 					</div>
 				</div>
 			</div>

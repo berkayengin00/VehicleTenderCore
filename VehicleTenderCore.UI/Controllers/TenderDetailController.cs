@@ -39,10 +39,19 @@ namespace VehicleTenderCore.UI.Controllers
 		public async Task<IActionResult> GetByTenderId(int tenderId)
 		{
 			var result = await _tenderDetailApiProvider.TenderDetailsGet(tenderId);
-			
-			return View(result.Data);
-		}
+            if (result.StatusCode==HttpStatusCode.OK)
+            {
+                return View(result.Data);
+            }
 
+            return RedirectToAction("Index", "Tender");
+        }
+
+        [HttpGet]
+        public IActionResult GetDetailByUserId()
+        {
+            return View();
+        }
 
 		[HttpPost]
 		public IActionResult Add(string jsonData)

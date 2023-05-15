@@ -16,6 +16,7 @@ using VehicleTenderCore.DAL.Abstract;
 using VehicleTenderCore.DAL.Concrete;
 using VehicleTenderCore.DAL.Context;
 using Microsoft.AspNetCore.Http;
+using VehicleTenderCore.BLL.Mapper;
 
 namespace VehicleTenderCore.API
 {
@@ -39,7 +40,9 @@ namespace VehicleTenderCore.API
             services.AddScoped<ITenderDal, TenderDal>();
             services.AddScoped<IVehicleService, VehicleManager>();
             services.AddScoped<IVehicleDal, VehicleDal>();
-            services.AddAutoMapper(typeof(Startup));
+            services.AddScoped<ITenderHistoryService, TenderHistoryManager>();
+            services.AddScoped<ITenderHistoryDal, TenderHistoryDal>();
+            services.AddAutoMapper(typeof(TenderHistoryProfile));
             services.AddControllers();
 
         }

@@ -28,10 +28,15 @@
 				@foreach (var image in item.VehicleImages)
 				{
 					<div class="carousel-item @if (image == item.VehicleImages[0]) { <text>active</text> }">
-						<img class="d-block w-100" src="http://localhost:33901/@image" alt="First slide style="height="350px;">
+						<img class="d-block w-100" src="http://localhost:33901/@image" alt="First slide style="height="400px;">
 					</div>
 				}
-			
+				@if (item.VehicleImages.Count==0)
+				{
+					<div class="carousel-item active">
+						<img class="d-block w-100" src="/TemplateContent/img/DbAddedImg/default_car.jpg" alt="First slide style="height="400px;">
+					</div>
+				}
 			</div>
 			<a class="carousel-control-prev" href="#carouselExampleControls@(sayac)" role="button" data-slide="prev">
 				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -46,22 +51,27 @@
 		<div class="col-md-4 border p-3">
 			<div class="d-flex flex-column bd-highlight mb-3">
 				<div>
-					<div class="d-flex justify-content-between bd-highlight mb-3">
+					<div class="d-flex justify-content-between bd-highlight mb-5">
 						<pre>Araç Plaka</pre>
 						<p style="font-size:30px;">@item.LicencePlate</p>
 					</div>
-					<div class="d-flex justify-content-between bd-highlight mb-3">
-						<p>İhale Fiyatı</p>
+					<div class="d-flex justify-content-between bd-highlight mb-5">
+						<pre>İhale Fiyatı</pre>
 						<p style="font-size:30px;">@item.StartPrice</p>
 					</div>
+					<div class="d-flex justify-content-between bd-highlight mt-5">
+						<pre>Teklif Edilen Fiyat</pre>
+						<p style="font-size:30px;">@item.OfferPrice</p>
+					</div>
 				</div>
-				<div>
-					<form >
+				<div class="mt-5">
+					<form asp-controller="TenderHistory" asp-action="Add" method="post">
+						<input type="hidden" name="TenderDetailId" value="@item.TenderDetailId"/>
 						<div class="d-flex justify-content-end bd-highlight mb-3">
-							<input type="number" class="form-control col-md-6"/>
+							<input name="Price" type="number" class="form-control col-md-6" min="@((int)item.StartPrice)" required="true"/>
 						</div>
 						<div class="d-flex justify-content-end bd-highlight mb-3">
-							<input type="submit" class="btn btn-success col-md-4"/>
+							<input type="submit" class="btn btn-success col-md-6"/>
 						</div>
 					</form>
 				</div>
