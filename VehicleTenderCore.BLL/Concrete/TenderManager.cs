@@ -10,11 +10,13 @@ using VehicleTender.Entity.View;
 using VehicleTender.Entity.View.Tender;
 using VehicleTenderCore.BLL.Abstract;
 using VehicleTenderCore.Core.DataAccess.Repository;
+using VehicleTenderCore.Core.Result;
 using VehicleTenderCore.DAL.Abstract;
 using VehicleTenderCore.DAL.Context;
 using VehicleTenderCore.Entities.View;
 using VehicleTenderCore.Entities.View.Tender;
 using VehicleTenderCore.Entities.View.TenderDetail;
+using VehicleTenderCore.Entities.View.TenderHistory;
 
 namespace VehicleTenderCore.BLL.Concrete
 {
@@ -27,29 +29,64 @@ namespace VehicleTenderCore.BLL.Concrete
             _tenderDal = tenderDal;
         }
 
-        public List<TenderListVM> GetAll()
+        public DataResult<List<TenderListVM>> GetAll()
         {
-            return _tenderDal.GetAll();
+            var result= _tenderDal.GetAll();
+            if (result==null)
+            {
+                return new DataResult<List<TenderListVM>>("Hata",result,false);
+            }
+            return new DataResult<List<TenderListVM>>("Başarılı", result, true);
         }
 
-        public List<TenderListVM> GetAllByUserType(int usertype)
+        public DataResult<List<TenderListVM>> GetAllByUserType(int usertype)
         {
             if (usertype == (int)UserTypeEnum.Retired)
             {
-                return _tenderDal.GetAllByUserType(usertype);
+                var result= _tenderDal.GetAllByUserType(usertype);
+                return result == null ? new DataResult<List<TenderListVM>>("Hata",null,true) : new DataResult<List<TenderListVM>>("Başarılı", result, true);
             }
-            return _tenderDal.GetAll();
 
+            var tenderAllList = _tenderDal.GetAll();
+            return tenderAllList!=null 
+                ? new DataResult<List<TenderListVM>>("Başarılı", tenderAllList, true) 
+                : new DataResult<List<TenderListVM>>("Hata", null, false);
         }
 
-        public void TenderAndDetailsAdd(TenderAndDetailsVM tenderAndDetailsVM)
+        public DataResult<List<TenderListVM>> GetAllByUserId(int userId)
+        {
+
+            var result= _tenderDal.GetAllByUserId(userId);
+            if (result!=null)
+            {
+                return new DataResult<List<TenderListVM>>("Başarılı", result, true);
+            }
+            return new DataResult<List<TenderListVM>>("Hata", null, false);
+        }
+
+        public Result TenderAndDetailsAdd(TenderAndDetailsVM tenderAndDetailsVM)
         {
             throw new NotImplementedException();
         }
 
-        public TenderDetailListVM GetTenderDetail(int tenderId)
+        public DataResult<TenderDetailListVM> GetTenderDetail(int tenderId)
         {
-	        return _tenderDal.GetTenderDetail(tenderId);
+	        var result = _tenderDal.GetTenderDetail(tenderId);
+            if (result!=null)
+            {
+                return new DataResult<TenderDetailListVM>("Başarılı", result, true);
+            }
+            return new DataResult<TenderDetailListVM>("Hata", null, false);
+        }
+
+        public DataResult<TenderOfferHistory> GetForCorporate(int tenderId)
+        {
+	        var result = _tenderDal.GetForCorporate(tenderId);
+	        if (result != null)
+	        {
+				return new DataResult<TenderOfferHistory>("Başarılı", result, true);
+			}
+			return new DataResult<TenderOfferHistory>("Hata", null, false);  
         }
     }
 }

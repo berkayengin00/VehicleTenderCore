@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VehicleTenderCore.Core.Result;
 using VehicleTenderCore.Entities.View.TenderHistory;
 
 namespace VehicleTenderCore.BLL.Abstract
 {
     public interface ITenderHistoryService
     {
-        void Add(TenderOfferAddVM vm);
+        Result Add(TenderOfferAddVM vm);
     }
 }

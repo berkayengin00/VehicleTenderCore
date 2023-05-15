@@ -16,10 +16,28 @@ namespace VehicleTenderCore.API.Controllers
         }
 
         [HttpGet("getall/{id}")]
-        public IActionResult Login(int id)
+        public IActionResult GetAll(int id)
         {
             var result =_tenderService.GetAllByUserType(id);
-            return Ok(result);
+   
+            if (result.IsSuccess)
+            {
+				return Ok(result);
+			}
+            return BadRequest(result);
+
+        }
+
+        
+        [HttpGet("GetAllByUserId/{id}")]
+        public IActionResult GetAllByUserId(int id)
+        {
+            var result = _tenderService.GetAllByUserId(id);
+            if (result.IsSuccess)
+            {
+	            return Ok(result);
+            }
+            return BadRequest(result);
         }
     }
 }

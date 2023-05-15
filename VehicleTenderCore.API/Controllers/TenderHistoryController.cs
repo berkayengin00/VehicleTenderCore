@@ -18,8 +18,12 @@ namespace VehicleTenderCore.API.Controllers
         [HttpPost("add")]
         public IActionResult Add(TenderOfferAddVM vm)
         {
-            _tenderService.Add(vm);
-            return Ok();
+            var result = _tenderService.Add(vm);
+            if (result.IsSuccess)
+            {
+	            return Ok(result);
+            }
+            return BadRequest(result);
         }
     }
 }

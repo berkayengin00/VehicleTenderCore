@@ -21,14 +21,23 @@ namespace VehicleTenderCore.API.Controllers
         public IActionResult Login([FromBody] RetailCustomerLoginVM vm)
         {
             var result = _retailCustomerDal.CheckRetailCustomer(vm);
-            return Ok(result);
+            if (result!=null)
+            {
+				return Ok(result);
+			}
+
+            return BadRequest(result);
         }
 
         [HttpPost("logincorporate")]
         public IActionResult Login([FromBody] CorporateCustomerLoginVM vm)
         {
             var result = _corporateCustomer.CheckCorporateCustomer(vm);
-            return Ok(result);
+            if (result!=null)
+            {
+	            return Ok(result);
+            }
+            return BadRequest(result);
         }
     }
 }

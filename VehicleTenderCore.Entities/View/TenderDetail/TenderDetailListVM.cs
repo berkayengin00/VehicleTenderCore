@@ -22,6 +22,7 @@ namespace VehicleTenderCore.Entities.View.TenderDetail
 		public DateTime EndDateTime { get; set; }
 		[DisplayName("İhale Türü")]
 		public int TenderTypeId { get; set; }
+		public int UserId { get; set; }
 
 		public List<TenderAndVehicleDetailVM> TenderAndVehicleDetailList{ get; set; }
 		public List<SelectListItem> TenderTypes { get; set; }

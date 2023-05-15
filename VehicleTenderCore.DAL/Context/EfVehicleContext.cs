@@ -16,6 +16,7 @@ namespace VehicleTenderCore.DAL.Context
 {
     public class EfVehicleContext:DbContext
     {
+
         public EfVehicleContext(DbContextOptions<EfVehicleContext> options) : base(options)
         {
         }

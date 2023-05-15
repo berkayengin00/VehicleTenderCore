@@ -1,6 +1,15 @@
-﻿
-@using System.Runtime.Serialization
+﻿@using System.Runtime.Serialization
+@using Microsoft.AspNetCore.Http
 @model VehicleTenderCore.Entities.View.TenderDetail.TenderDetailListVM
+
+@using VehicleTenderCore.UI.Extensions
+
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+	var user = HttpContextAccessor.HttpContext?.Session.MySessionGet<SessionVMForUser>("user");
+}
+
 <div style="margin-top:125px;"></div>
 
 <div class="mb-5">
@@ -27,14 +36,16 @@
 			<div class="carousel-inner">
 				@foreach (var image in item.VehicleImages)
 				{
-					<div class="carousel-item @if (image == item.VehicleImages[0]) { <text>active</text> }">
-						<img class="d-block w-100" src="http://localhost:33901/@image" alt="First slide style="height="400px;">
-					</div>
+					<div class="carousel-item @if (image == item.VehicleImages[0]) {
+		    <text>active</text>
+ }">
+										<img class="d-block w-100" src="http://localhost:33901/@image" alt="First slide style=" height="400px;">
+									</div>
 				}
-				@if (item.VehicleImages.Count==0)
+				@if (item.VehicleImages.Count == 0)
 				{
 					<div class="carousel-item active">
-						<img class="d-block w-100" src="/TemplateContent/img/DbAddedImg/default_car.jpg" alt="First slide style="height="400px;">
+						<img class="d-block w-100" src="/TemplateContent/img/DbAddedImg/default_car.jpg" alt="First slide style=" height="400px;">
 					</div>
 				}
 			</div>
@@ -47,7 +58,7 @@
 				<span class="sr-only">Next</span>
 			</a>
 		</div>
-		
+
 		<div class="col-md-4 border p-3">
 			<div class="d-flex flex-column bd-highlight mb-3">
 				<div>
@@ -66,17 +77,27 @@
 				</div>
 				<div class="mt-5">
 					<form asp-controller="TenderHistory" asp-action="Add" method="post">
-						<input type="hidden" name="TenderDetailId" value="@item.TenderDetailId"/>
-						<div class="d-flex justify-content-end bd-highlight mb-3">
-							<input name="Price" type="number" class="form-control col-md-6" min="@((int)item.StartPrice)" required="true"/>
-						</div>
-						<div class="d-flex justify-content-end bd-highlight mb-3">
-							<input type="submit" class="btn btn-success col-md-6"/>
-						</div>
+						<input type="hidden" name="TenderDetailId" value="@item.TenderDetailId" />
+						@if (Model.UserId != user.UserId)
+						{
+							<div class="d-flex justify-content-between bd-highlight mb-3">
+								<pre>Teklif Ver</pre>
+								<input name="Price" type="number" class="form-control col-md-6" min="@((int)item.OfferPrice)" required="true" />
+							</div>
+							<div class="d-flex justify-content-end bd-highlight mb-3">
+								<input type="submit" class="btn btn-success col-md-6" value="Teklif Ver" />
+							</div>
+						}
+						else
+						{
+							<div class="d-flex justify-content-end bd-highlight mb-3">
+								<a href="@Url.Action("GetForCorporate","TenderHistory",new {@tenderId=item.TenderDetailId})" class="btn btn-primary col-md-6">İhale Detay</a>
+							</div>
+						}
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+
 }

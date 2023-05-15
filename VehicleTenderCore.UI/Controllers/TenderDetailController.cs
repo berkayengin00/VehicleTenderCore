@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using VehicleTender.Entity.View;
 using VehicleTenderCore.BLL.Abstract;
@@ -13,6 +14,7 @@ using VehicleTenderCore.UI.Providers;
 
 namespace VehicleTenderCore.UI.Controllers
 {
+	[Authorize]
 	public class TenderDetailController : Controller
 	{
 		private readonly VehicleApiProvider _vehicleApiProvider;
@@ -43,15 +45,9 @@ namespace VehicleTenderCore.UI.Controllers
             {
                 return View(result.Data);
             }
-
             return RedirectToAction("Index", "Tender");
         }
 
-        [HttpGet]
-        public IActionResult GetDetailByUserId()
-        {
-            return View();
-        }
 
 		[HttpPost]
 		public IActionResult Add(string jsonData)

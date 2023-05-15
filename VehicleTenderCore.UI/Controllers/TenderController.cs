@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VehicleTender.Entity.View;
 using VehicleTenderCore.Entities.View;
@@ -9,7 +11,8 @@ using VehicleTenderCore.UI.Providers;
 
 namespace VehicleTenderCore.UI.Controllers
 {
-    public class TenderController : Controller
+	[Authorize]
+	public class TenderController : Controller
     {
         private readonly TenderApiProvider _tenderApiProvider;
         public TenderController(TenderApiProvider tenderApiProvider)
@@ -40,6 +43,17 @@ namespace VehicleTenderCore.UI.Controllers
 
             TempData.Put("user",user);
             return RedirectToAction("Add","TenderDetail");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetTenderByUserId(int id)
+        {
+            var list = await _tenderApiProvider.TenderGetAllByUserId(id);
+            if (list.StatusCode==HttpStatusCode.OK)
+            {
+                return View(list.Data);
+            }
+            return View(list.Message);
         }
 
         private SessionVMForUser GetUserBySession()

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using VehicleTender.Entity.Concrete;
 using VehicleTenderCore.BLL.Abstract;
+using VehicleTenderCore.Core.Result;
 using VehicleTenderCore.DAL.Abstract;
 using VehicleTenderCore.Entities.View.TenderHistory;
 
@@ -21,10 +22,15 @@ namespace VehicleTenderCore.BLL.Concrete
             _mapper= mapper;
         }
 
-        public void Add(TenderOfferAddVM vm)
+        public Result Add(TenderOfferAddVM vm)
         {
             var result = _mapper.Map<TenderHistory>(vm);
-            _tenderHistoryDal.Insert(result);
+            var success =_tenderHistoryDal.Insert(result)>0;
+            if (success)
+            {
+	            return new Result("Teklif Verildi", true);
+            }
+            return new Result("Teklif Verilemedi", false);  
         }
     }
 }

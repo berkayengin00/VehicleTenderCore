@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using VehicleTenderCore.Core.Result;
 using VehicleTenderCore.Entities.View;
 using VehicleTenderCore.Entities.View.TenderDetail;
+using VehicleTenderCore.Entities.View.TenderHistory;
 using VehicleTenderCore.UI.Providers.BaseType;
 
 namespace VehicleTenderCore.UI.Providers
@@ -30,10 +32,12 @@ namespace VehicleTenderCore.UI.Providers
 	        var result = await _httpClient.GetAsync($"TenderDetail/getbyid/{id}");
 	        if (result.IsSuccessStatusCode)
 	        {
-		        var data = JsonConvert.DeserializeObject<TenderDetailListVM>(await result.Content.ReadAsStringAsync());
-		        return new GeneralDataType<TenderDetailListVM>("", result.StatusCode, data);
+		        var data = JsonConvert.DeserializeObject<DataResult<TenderDetailListVM>>(await result.Content.ReadAsStringAsync());
+		        return new GeneralDataType<TenderDetailListVM>(data.Message, result.StatusCode, data.Data);
 	        }
 	        return new GeneralDataType<TenderDetailListVM>("", result.StatusCode, null); ;
         }
+
+
 	}
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using VehicleTenderCore.Core.Result;
 using VehicleTenderCore.Entities.View;
 using VehicleTenderCore.Entities.View.Tender;
 using VehicleTenderCore.UI.Providers.BaseType;
@@ -24,12 +25,23 @@ namespace VehicleTenderCore.UI.Providers
             var result = await _httpClient.GetAsync($"Tender/GetAll/{id}");
             if (result.IsSuccessStatusCode)
             {
-                var data = JsonConvert.DeserializeObject<List<TenderListVM>>(await result.Content.ReadAsStringAsync());
-                return new GeneralDataType<List<TenderListVM>>("", result.StatusCode, data);
+                var data = JsonConvert.DeserializeObject<DataResult<List<TenderListVM>>>(await result.Content.ReadAsStringAsync());
+                return new GeneralDataType<List<TenderListVM>>(data.Message, result.StatusCode, data.Data);
             }
-            return new GeneralDataType<List<TenderListVM>>("", result.StatusCode, null); ;
+            return new GeneralDataType<List<TenderListVM>>("Hata", result.StatusCode, null); ;
+        }
+
+        public async Task<GeneralDataType<List<TenderListVM>>> TenderGetAllByUserId(int id)
+        {
+            var result = await _httpClient.GetAsync($"Tender/GetAllByUserId/{id}");
+            if (result.IsSuccessStatusCode)
+            {
+                var data = JsonConvert.DeserializeObject<DataResult<List<TenderListVM>>>(await result.Content.ReadAsStringAsync());
+                return new GeneralDataType<List<TenderListVM>>(data.Message, result.StatusCode, data.Data);
+            }
+            return new GeneralDataType<List<TenderListVM>>("hata", result.StatusCode, null); ;
         }
 
 
-	}
+    }
 }
