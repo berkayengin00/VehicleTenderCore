@@ -82,7 +82,7 @@
 						{
 							<div class="d-flex justify-content-between bd-highlight mb-3">
 								<pre>Teklif Ver</pre>
-								<input name="Price" type="number" class="form-control col-md-6" min="@((int)item.OfferPrice)" required="true" />
+								<input name="Price" type="number" class="form-control col-md-6" min="@(item.OfferPrice==0 ? (int)item.StartPrice+1: (int)item.OfferPrice+1)" required="true" />
 							</div>
 							<div class="d-flex justify-content-end bd-highlight mb-3">
 								<input type="submit" class="btn btn-success col-md-6" value="Teklif Ver" />
@@ -94,10 +94,70 @@
 								<a href="@Url.Action("GetForCorporate","TenderHistory",new {@tenderId=item.TenderDetailId})" class="btn btn-primary col-md-6">İhale Detay</a>
 							</div>
 						}
+
+						<button type="button" class="badge bg-primary butonClass" data-id="@item.VehicleId">Araç Detayları</button>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
 
+}
+
+<div class="modal fade" id="modalId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<table class="table">
+				<thead>
+				<tr>
+					<th></th>
+					<th></th>
+				</tr>
+				</thead>
+				<tbody id="tableBody">
+				<!-- Veriler buraya gelecek -->
+				</tbody>
+			</table>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts
+{
+	<script>
+		$(document).ready(function () {
+			$(".butonClass").click(function () {
+				// Ajax çağrısı yaparak, dropdown verilerini alıyoruz
+				var vehicleId = $(this).data("id");
+				$.ajax({
+					url: "@Url.Action("Index", "Vehicle")",
+					type: "GET",
+					data: { vehicleId: vehicleId },
+					success: function (data) {
+						debugger;
+						$("#tableBody").empty();
+						var row = "<tr><td>Marka</td><td>" + data.licencePlate + "</td></tr>";
+						row += "<tr><td>Marka</td><td>" + data.brandName + "</td></tr>";
+						row += "<tr><td>Model</td><td>" + data.modelName + "</td></tr>";
+						row += "<tr><td>Kasa Tipi</td><td>" + data.bodyTypeName + "</td></tr>";
+						row += "<tr><td>Vites Tipi</td><td>" + data.gearTypeName + "</td></tr>";
+						row += "<tr><td>Yakıt</td><td>" + data.fuelTypeName + "</td></tr>";
+						row += "<tr><td>Vites</td><td>" + data.version + "</td></tr>";						
+						row += "<tr><td>Kilometre</td><td>" + data.kiloMeter + "</td></tr>";
+						row += "<tr><td>Kilometre</td><td>" + data.description + "</td></tr>";
+						$("#tableBody").append(row);
+
+						// Modal'ı açıyoruz
+						$("#modalId").modal("show");
+					},
+					error: function () {
+						alert("Bir hata oluştu!");
+					}
+				});
+			});
+		});
+	</script>
 }

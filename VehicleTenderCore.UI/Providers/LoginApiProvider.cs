@@ -3,6 +3,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using VehicleTenderCore.Core.Result;
 using VehicleTenderCore.Entities.View;
 using VehicleTenderCore.UI.Providers.BaseType;
 
@@ -20,18 +21,20 @@ namespace VehicleTenderCore.UI.Providers
         {
             var result = await _httpClient.PostAsync("Login/LoginRetail", new StringContent(JsonConvert.SerializeObject(vm), Encoding.UTF8, "application/json"));
 
-            var data = JsonConvert.DeserializeObject<SessionVMForUser>(await result.Content.ReadAsStringAsync());
+            var data = JsonConvert.DeserializeObject<DataResult<SessionVMForUser>>(await result.Content.ReadAsStringAsync());
 
-            return new GeneralDataType<SessionVMForUser>( result.RequestMessage?.ToString(),result.StatusCode,data);
+            return new GeneralDataType<SessionVMForUser>( result.RequestMessage?.ToString(),result.StatusCode,data.Data);
         }
 
         public async Task<GeneralDataType<SessionVMForUser>> CheckCorporateCustomerAsync(CorporateCustomerLoginVM vm)
         {
             var result = await _httpClient.PostAsync("Login/LoginCorporate", new StringContent(JsonConvert.SerializeObject(vm), Encoding.UTF8, "application/json"));
-
-            var data = JsonConvert.DeserializeObject<SessionVMForUser>(await result.Content.ReadAsStringAsync());
-
-            return new GeneralDataType<SessionVMForUser>(result.RequestMessage?.ToString(), result.StatusCode, data);
+             if (result.IsSuccessStatusCode)
+            {
+				var data = JsonConvert.DeserializeObject<DataResult<SessionVMForUser>>(await result.Content.ReadAsStringAsync());
+				return new GeneralDataType<SessionVMForUser>(data.Message, result.StatusCode, data.Data);
+			}
+            return new GeneralDataType<SessionVMForUser>("Hata!", result.StatusCode, null);
         }
     }
 }

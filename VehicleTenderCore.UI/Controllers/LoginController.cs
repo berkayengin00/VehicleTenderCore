@@ -53,7 +53,7 @@ namespace VehicleTenderCore.UI.Controllers
             return BadRequest(user.Message);
         }
 
-
+        [NonAction]
         public async Task AuthenticationAsync(SessionVMForUser vm)
         {
 	        var claims = new[] { new Claim(ClaimTypes.Name, vm.Email) };

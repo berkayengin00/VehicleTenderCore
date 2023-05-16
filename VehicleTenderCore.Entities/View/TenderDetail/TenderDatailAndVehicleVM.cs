@@ -10,6 +10,7 @@ namespace VehicleTenderCore.Entities.View.TenderDetail
 	{
 		public int TenderDetailId { get; set; }
 		public string LicencePlate { get; set; }
+		public int VehicleId { get; set; }
 		public decimal MinPrice { get; set; }
 		public decimal StartPrice { get; set; }
         public decimal OfferPrice { get; set; }

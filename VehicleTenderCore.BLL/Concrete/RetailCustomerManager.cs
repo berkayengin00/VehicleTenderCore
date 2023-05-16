@@ -9,6 +9,7 @@ using VehicleTender.Entity.Concrete;
 using VehicleTenderCore.BLL.Abstract;
 using VehicleTenderCore.Core.Result;
 using VehicleTenderCore.DAL.Abstract;
+using VehicleTenderCore.Entities.View;
 using VehicleTenderCore.Entities.View.RetailCustomer;
 
 namespace VehicleTenderCore.BLL.Concrete
@@ -24,10 +25,19 @@ namespace VehicleTenderCore.BLL.Concrete
         }
 
 
+        public DataResult<SessionVMForUser> CheckRetailCustomer(RetailCustomerLoginVM vm)
+        {
+	        var result = _retailCustomerDal.CheckRetailCustomer(vm);
+	        if (result!=null)
+	        {
+                return new DataResult<SessionVMForUser>("Kullanıcı Kayıtlı", result, true);
+	        }
+	        return new DataResult<SessionVMForUser>("Sistemle Tanımlı Kullanıcı Bulunamadı", result, false);
+        }
+
         public Result Register(RetailCustomerRegisterVM vm)
         {
-
-            var result = _mapper.Map<RetailCustomer>(vm);
+	        var result = _mapper.Map<RetailCustomer>(vm);
             var success = _retailCustomerDal.Insert(result) > 0;
             if (success)
             {

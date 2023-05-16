@@ -10,10 +10,10 @@ using VehicleTenderCore.Entities.View;
 
 namespace VehicleTenderCore.DAL.Concrete
 {
-    public class CorporateCustomer:ICorporateCustomer
+    public class CorporateCustomerDal:ICorporateCustomerDal
     {
         private readonly EfVehicleContext _db;
-        public CorporateCustomer(EfVehicleContext db)
+        public CorporateCustomerDal(EfVehicleContext db)
         {
             _db = db;
         }

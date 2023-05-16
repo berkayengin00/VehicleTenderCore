@@ -28,7 +28,7 @@
 			<tr>
 				<td>@item.Price</td>
 				<td>@item.AddedDate</td>
-					<td>@(Model.TenderMinPrice < item.Price ? Model.TenderMinPrice - item.Price + " TL Fazla" : item.Price - Model.TenderMinPrice + " TL Az")</td>
+					<td>@(Model.TenderMinPrice < item.Price ? (item.Price - Model.TenderMinPrice) + " TL Fazla" : (item.Price - Model.TenderMinPrice) + " TL Az")</td>
 			</tr>
 		}	
 		</tbody>

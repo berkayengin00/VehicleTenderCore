@@ -39,7 +39,7 @@ namespace VehicleTenderCore.UI.Controllers
 
 		[HttpGet]
 		public async Task<IActionResult> GetByTenderId(int tenderId)
-		{
+		 {
 			var result = await _tenderDetailApiProvider.TenderDetailsGet(tenderId);
             if (result.StatusCode==HttpStatusCode.OK)
             {

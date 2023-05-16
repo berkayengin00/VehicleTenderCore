@@ -5,13 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using VehicleTenderCore.Core.Result;
 using VehicleTenderCore.Entities.View;
-using VehicleTenderCore.Entities.View.RetailCustomer;
 
 namespace VehicleTenderCore.BLL.Abstract
 {
-	public interface IRetailCustomerService
+	public interface ICorporateCustomerService
 	{
-		DataResult<SessionVMForUser> CheckRetailCustomer(RetailCustomerLoginVM vm);
-		Result Register(RetailCustomerRegisterVM vm);
+		DataResult<SessionVMForUser> CheckCorporateCustomer(CorporateCustomerLoginVM vm);
 	}
 }

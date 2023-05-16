@@ -20,5 +20,16 @@ namespace VehicleTenderCore.API.Controllers
             var list =_vehicleService.GetAllVehicleByUserType(id);
             return Ok(list);
         }
+
+        [HttpGet("getByVehicleId/{id}")]
+        public IActionResult GetByVehicleId(int id)
+        {
+			var result = _vehicleService.GetVehicleDetail(id);
+			if (result.IsSuccess)
+			{
+				return Ok(result);
+			}
+			return BadRequest(result);
+		}   
     }
 }

@@ -21,6 +21,6 @@ namespace VehicleTenderCore.BLL.Abstract
         DataResult<List<TenderListVM>> GetAllByUserId(int userId);
         Result TenderAndDetailsAdd(TenderAndDetailsVM tenderAndDetailsVM);
         DataResult<TenderDetailListVM> GetTenderDetail(int tenderId);
-        DataResult<TenderOfferHistory> GetForCorporate(int tenderId);
+        DataResult<TenderOfferHistory> GetForCorporate(int tenderDetailId);
     }
 }

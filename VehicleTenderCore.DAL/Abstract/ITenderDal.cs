@@ -20,6 +20,6 @@ namespace VehicleTenderCore.DAL.Abstract
         void TenderAndDetailsAdd(TenderAndDetailsVM tenderAndDetailsVM);
         TenderDetailListVM GetTenderDetail(int tenderId);
         List<TenderListVM> GetAllByUserId(int userId);
-		TenderOfferHistory GetForCorporate(int tenderId);
+		TenderOfferHistory GetForCorporate(int tenderDetailId);
 	}
 }

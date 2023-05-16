@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using VehicleTenderCore.BLL.Abstract;
 using VehicleTenderCore.DAL.Abstract;
 using VehicleTenderCore.Entities.View;
 
@@ -9,19 +10,19 @@ namespace VehicleTenderCore.API.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        private readonly IRetailCustomerDal _retailCustomerDal;
-        private readonly ICorporateCustomer _corporateCustomer;
-        public LoginController(IRetailCustomerDal retailCustomerDal, ICorporateCustomer corporateCustomer)
+        private readonly IRetailCustomerService _retailCustomerService;
+        private readonly ICorporateCustomerService _corporateCustomerService;
+        public LoginController(IRetailCustomerService retailCustomerService, ICorporateCustomerService corporateCustomerService)
         {
-            _retailCustomerDal = retailCustomerDal;
-            _corporateCustomer = corporateCustomer;
+            _retailCustomerService = retailCustomerService;
+			_corporateCustomerService = corporateCustomerService;
         }
 
         [HttpPost("loginretail")]
         public IActionResult Login([FromBody] RetailCustomerLoginVM vm)
         {
-            var result = _retailCustomerDal.CheckRetailCustomer(vm);
-            if (result!=null)
+            var result = _retailCustomerService.CheckRetailCustomer(vm);
+            if (result.IsSuccess)
             {
 				return Ok(result);
 			}
@@ -32,8 +33,8 @@ namespace VehicleTenderCore.API.Controllers
         [HttpPost("logincorporate")]
         public IActionResult Login([FromBody] CorporateCustomerLoginVM vm)
         {
-            var result = _corporateCustomer.CheckCorporateCustomer(vm);
-            if (result!=null)
+            var result = _corporateCustomerService.CheckCorporateCustomer(vm);
+            if (result.IsSuccess)
             {
 	            return Ok(result);
             }

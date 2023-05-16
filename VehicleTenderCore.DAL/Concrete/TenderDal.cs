@@ -122,6 +122,7 @@ namespace VehicleTenderCore.DAL.Concrete
 														  MinPrice = td.MinPrice,
 														  StartPrice = td.StartPrice,
 														  LicencePlate = vehicle.LicensePlate,
+														  VehicleId = vehicle.Id,
 														  TenderDetailId = td.Id,
 														  OfferPrice = (from offer in _db.TenderHistories
 																		where offer.TenderDetailId == td.Id
@@ -149,12 +150,12 @@ namespace VehicleTenderCore.DAL.Concrete
 					}).ToList();
 		}
 		// todo tenderdetail ıd yi düzelt
-		public TenderOfferHistory GetForCorporate(int tenderId)
+		public TenderOfferHistory GetForCorporate(int tenderDetailId)
 		{
 			return (from td in _db.TenderDetails
-				join tender in _db.Tenders on td.TenderId equals tender.Id
-					where td.Id== tenderId
-				select new TenderOfferHistory()
+					join tender in _db.Tenders on td.TenderId equals tender.Id
+					where td.Id == tenderDetailId
+					select new TenderOfferHistory()
 					{
 						TenderName = tender.TenderName,
 						EndDateTime = tender.EndDateTime,
@@ -163,7 +164,7 @@ namespace VehicleTenderCore.DAL.Concrete
 						TenderStatusName = _db.TenderStatus.Where(x => x.Id == tender.TenderStatusId).Select(x => x.Name)
 							.SingleOrDefault(),
 						TenderOfferList = (from th in _db.TenderHistories
-										   where th.TenderDetailId == tenderId
+										   where th.TenderDetailId == tenderDetailId
 										   select new TenderOfferListVM()
 										   {
 											   AddedDate = th.AddedDate,

@@ -34,7 +34,7 @@ namespace VehicleTenderCore.API
         {
             services.AddDbContext<EfVehicleContext>(options => options.UseSqlServer(Configuration.GetConnectionString("myConnection")));
             services.AddScoped<IRetailCustomerDal, RetailCustomerDal>();
-            services.AddScoped<ICorporateCustomer, CorporateCustomer>();
+            services.AddScoped<ICorporateCustomerDal, CorporateCustomerDal>();
             services.AddScoped<IRetailCustomerService, RetailCustomerManager>();
             services.AddScoped<ITenderService, TenderManager>();
             services.AddScoped<ITenderDal, TenderDal>();
@@ -42,6 +42,8 @@ namespace VehicleTenderCore.API
             services.AddScoped<IVehicleDal, VehicleDal>();
             services.AddScoped<ITenderHistoryService, TenderHistoryManager>();
             services.AddScoped<ITenderHistoryDal, TenderHistoryDal>();
+            services.AddScoped<ICorporateCustomerService, CorporateCustomerManager>();
+            services.AddScoped<IRetailCustomerService, RetailCustomerManager>();
             services.AddAutoMapper(typeof(TenderHistoryProfile));
             services.AddControllers();
 

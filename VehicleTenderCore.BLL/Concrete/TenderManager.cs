@@ -79,9 +79,9 @@ namespace VehicleTenderCore.BLL.Concrete
             return new DataResult<TenderDetailListVM>("Hata", null, false);
         }
 
-        public DataResult<TenderOfferHistory> GetForCorporate(int tenderId)
+        public DataResult<TenderOfferHistory> GetForCorporate(int tenderDetailId)
         {
-	        var result = _tenderDal.GetForCorporate(tenderId);
+	        var result = _tenderDal.GetForCorporate(tenderDetailId);
 	        if (result != null)
 	        {
 				return new DataResult<TenderOfferHistory>("Başarılı", result, true);
