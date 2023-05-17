@@ -19,16 +19,12 @@ namespace VehicleTenderCore.UI.Providers
 
         public async Task<GeneralDataType<SessionVMForUser>> CheckRetailCustomerAsync(RetailCustomerLoginVM vm)
         {
-            var result = await _httpClient.PostAsync("Login/LoginRetail", new StringContent(JsonConvert.SerializeObject(vm), Encoding.UTF8, "application/json"));
-            return await new ApiProviderBaseClass().DataReturn<SessionVMForUser>(result);
-
+	        return await new ApiProviderBaseClass().ResultReturnPost<SessionVMForUser>(_httpClient,vm, "Login/LoginRetail","Kayıtlı Bireysel Kullanıcı Bulunamadı");
         }
 
         public async Task<GeneralDataType<SessionVMForUser>> CheckCorporateCustomerAsync(CorporateCustomerLoginVM vm)
         {
-            var result = await _httpClient.PostAsync("Login/LoginCorporate", new StringContent(JsonConvert.SerializeObject(vm), Encoding.UTF8, "application/json"));
-            
-            return await new ApiProviderBaseClass().DataReturn<SessionVMForUser>(result);
+	        return await new ApiProviderBaseClass().ResultReturnPost<SessionVMForUser>(_httpClient,vm, "Login/LoginCorporate","Kayıtlı Kurumsal Kullanıcı Bulunamadı");
         }
     }
 }

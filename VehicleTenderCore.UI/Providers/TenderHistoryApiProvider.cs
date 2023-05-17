@@ -20,17 +20,12 @@ namespace VehicleTenderCore.UI.Providers
 
         public async Task<GeneralType> TenderOfferAdd(TenderOfferAddVM vm)
         {
-            var result = await _httpClient.PostAsync("TenderHistory/Add", new StringContent(JsonConvert.SerializeObject(vm), Encoding.UTF8, "application/json"));
-
-            return await new ApiProviderBaseClass().ResultReturn(result);
+            return await new ApiProviderBaseClass().ResultReturnPost(_httpClient, vm, "TenderHistory/Add", "Teklif verilemedi");
         }
 
         public async Task<GeneralDataType<TenderOfferHistory>> GetForCorporate(int id)
         {
-	        var result = await _httpClient.GetAsync($"TenderDetail/GetDetailForCorporate/{id}");
-
-            return await new ApiProviderBaseClass().DataReturn<TenderOfferHistory>(result);
-
+	        return await new ApiProviderBaseClass().DataReturnGet<TenderOfferHistory>(_httpClient, "TenderDetail/GetDetailForCorporate/",id);
         }
 	}
 }
