@@ -9,6 +9,7 @@ namespace VehicleTenderCore.Entities.View.TenderHistory
 {
     public class TenderOfferAddVM
     {
+	    public int TenderId { get; set; }
         public int TenderDetailId { get; set; }
         public int UserId { get; set; }
         public decimal Price { get; set; }

@@ -25,4 +25,12 @@
     <Folder Include="Pages\TenderHistory\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Error\Page500.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Error\Page500.cshtml" />
+  </ItemGroup>
+
 </Project>

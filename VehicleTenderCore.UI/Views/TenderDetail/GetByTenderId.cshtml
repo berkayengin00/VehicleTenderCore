@@ -37,10 +37,10 @@
 				@foreach (var image in item.VehicleImages)
 				{
 					<div class="carousel-item @if (image == item.VehicleImages[0]) {
-		    <text>active</text>
- }">
-										<img class="d-block w-100" src="http://localhost:33901/@image" alt="First slide style=" height="400px;">
-									</div>
+			<text>active</text>
+}">
+						<img class="d-block w-100" src="http://localhost:33901/@image" alt="First slide style=" height="400px;">
+					</div>
 				}
 				@if (item.VehicleImages.Count == 0)
 				{
@@ -78,24 +78,28 @@
 				<div class="mt-5">
 					<form asp-controller="TenderHistory" asp-action="Add" method="post">
 						<input type="hidden" name="TenderDetailId" value="@item.TenderDetailId" />
+						<input type="hidden" name="TenderId" value="@Model.TenderId" />
+						
 						@if (Model.UserId != user.UserId)
 						{
 							<div class="d-flex justify-content-between bd-highlight mb-3">
 								<pre>Teklif Ver</pre>
 								<input name="Price" type="number" class="form-control col-md-6" min="@(item.OfferPrice==0 ? (int)item.StartPrice+1: (int)item.OfferPrice+1)" required="true" />
 							</div>
-							<div class="d-flex justify-content-end bd-highlight mb-3">
-								<input type="submit" class="btn btn-success col-md-6" value="Teklif Ver" />
+							<div class="d-flex justify-content-end bd-highlight mb-6">
+								<button type="button" class="btn btn-outline-warning col-md-6 butonClass mr-1" data-id="@item.VehicleId">Araç Detayları</button>
+								<input type="submit" class="btn btn-success col-md-6" value="Teklif Ver"/>
+
 							</div>
 						}
 						else
 						{
 							<div class="d-flex justify-content-end bd-highlight mb-3">
-								<a href="@Url.Action("GetForCorporate","TenderHistory",new {@tenderId=item.TenderDetailId})" class="btn btn-primary col-md-6">İhale Detay</a>
+								<button type="button" class="btn btn-outline-warning col-md-6 butonClass" data-id="@item.VehicleId">Araç Detayları</button>
+								<a href="@Url.Action("GetForCorporate", "TenderHistory", new { @tenderId = item.TenderDetailId })" class="btn btn-primary col-md-6">İhale Detay</a>
 							</div>
 						}
-
-						<button type="button" class="badge bg-primary butonClass" data-id="@item.VehicleId">Araç Detayları</button>
+						
 					</form>
 				</div>
 			</div>
@@ -109,13 +113,13 @@
 		<div class="modal-content">
 			<table class="table">
 				<thead>
-				<tr>
-					<th></th>
-					<th></th>
-				</tr>
+					<tr>
+						<th></th>
+						<th></th>
+					</tr>
 				</thead>
 				<tbody id="tableBody">
-				<!-- Veriler buraya gelecek -->
+					<!-- Veriler buraya gelecek -->
 				</tbody>
 			</table>
 			<div class="modal-footer">
@@ -126,7 +130,7 @@
 </div>
 
 @section Scripts
-{
+	{
 	<script>
 		$(document).ready(function () {
 			$(".butonClass").click(function () {
@@ -139,15 +143,15 @@
 					success: function (data) {
 						debugger;
 						$("#tableBody").empty();
-						var row = "<tr><td>Marka</td><td>" + data.licencePlate + "</td></tr>";
+						var row = "<tr><td>Plaka</td><td>" + data.licensePlate + "</td></tr>";
 						row += "<tr><td>Marka</td><td>" + data.brandName + "</td></tr>";
 						row += "<tr><td>Model</td><td>" + data.modelName + "</td></tr>";
 						row += "<tr><td>Kasa Tipi</td><td>" + data.bodyTypeName + "</td></tr>";
 						row += "<tr><td>Vites Tipi</td><td>" + data.gearTypeName + "</td></tr>";
 						row += "<tr><td>Yakıt</td><td>" + data.fuelTypeName + "</td></tr>";
-						row += "<tr><td>Vites</td><td>" + data.version + "</td></tr>";						
+						row += "<tr><td>Versiyon</td><td>" + data.version + "</td></tr>";
 						row += "<tr><td>Kilometre</td><td>" + data.kiloMeter + "</td></tr>";
-						row += "<tr><td>Kilometre</td><td>" + data.description + "</td></tr>";
+						row += "<tr><td>Açıklama</td><td>" + data.description + "</td></tr>";
 						$("#tableBody").append(row);
 
 						// Modal'ı açıyoruz

@@ -16,7 +16,7 @@ namespace VehicleTenderCore.API.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(TenderOfferAddVM vm)
+        public IActionResult Add([FromBody]TenderOfferAddVM vm)
         {
             var result = _tenderService.Add(vm);
             if (result.IsSuccess)

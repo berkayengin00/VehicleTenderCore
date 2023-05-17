@@ -20,21 +20,15 @@ namespace VehicleTenderCore.UI.Providers
         public async Task<GeneralDataType<SessionVMForUser>> CheckRetailCustomerAsync(RetailCustomerLoginVM vm)
         {
             var result = await _httpClient.PostAsync("Login/LoginRetail", new StringContent(JsonConvert.SerializeObject(vm), Encoding.UTF8, "application/json"));
+            return await new ApiProviderBaseClass().DataReturn<SessionVMForUser>(result);
 
-            var data = JsonConvert.DeserializeObject<DataResult<SessionVMForUser>>(await result.Content.ReadAsStringAsync());
-
-            return new GeneralDataType<SessionVMForUser>( result.RequestMessage?.ToString(),result.StatusCode,data.Data);
         }
 
         public async Task<GeneralDataType<SessionVMForUser>> CheckCorporateCustomerAsync(CorporateCustomerLoginVM vm)
         {
             var result = await _httpClient.PostAsync("Login/LoginCorporate", new StringContent(JsonConvert.SerializeObject(vm), Encoding.UTF8, "application/json"));
-             if (result.IsSuccessStatusCode)
-            {
-				var data = JsonConvert.DeserializeObject<DataResult<SessionVMForUser>>(await result.Content.ReadAsStringAsync());
-				return new GeneralDataType<SessionVMForUser>(data.Message, result.StatusCode, data.Data);
-			}
-            return new GeneralDataType<SessionVMForUser>("Hata!", result.StatusCode, null);
+            
+            return await new ApiProviderBaseClass().DataReturn<SessionVMForUser>(result);
         }
     }
 }

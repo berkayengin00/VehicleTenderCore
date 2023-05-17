@@ -22,18 +22,15 @@ namespace VehicleTenderCore.UI.Providers
         {
             var result = await _httpClient.PostAsync("TenderHistory/Add", new StringContent(JsonConvert.SerializeObject(vm), Encoding.UTF8, "application/json"));
 
-            return new GeneralType(result.RequestMessage?.ToString(), result.StatusCode);
+            return await new ApiProviderBaseClass().ResultReturn(result);
         }
 
         public async Task<GeneralDataType<TenderOfferHistory>> GetForCorporate(int id)
         {
 	        var result = await _httpClient.GetAsync($"TenderDetail/GetDetailForCorporate/{id}");
-	        if (result.IsSuccessStatusCode)
-	        {
-		        var data = JsonConvert.DeserializeObject<DataResult<TenderOfferHistory>>(await result.Content.ReadAsStringAsync());
-		        return new GeneralDataType<TenderOfferHistory>(data.Message, result.StatusCode, data.Data);
-	        }
-	        return new GeneralDataType<TenderOfferHistory>("Hata", result.StatusCode, null); ;
+
+            return await new ApiProviderBaseClass().DataReturn<TenderOfferHistory>(result);
+
         }
 	}
 }

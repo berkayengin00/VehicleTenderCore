@@ -20,7 +20,7 @@ namespace VehicleTenderCore.UI.Providers
         {
             var result = await _httpClient.PostAsync("RetailCustomer/Register", new StringContent(JsonConvert.SerializeObject(vm), Encoding.UTF8, "application/json"));
 
-            return new GeneralType(result.RequestMessage?.ToString(), result.StatusCode);
+            return await new ApiProviderBaseClass().ResultReturn(result);
         }
     }
 }

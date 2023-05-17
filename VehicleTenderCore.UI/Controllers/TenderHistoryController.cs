@@ -25,7 +25,7 @@ namespace VehicleTenderCore.UI.Controllers
             var result = await _tenderHistoryApiProvider.TenderOfferAdd(vm);
             if (result.StatusCode == HttpStatusCode.OK)
             {
-	            return RedirectToAction("GetByTenderId","TenderDetail",new {tenderId=vm.TenderDetailId});
+	            return RedirectToAction("GetByTenderId","TenderDetail",new {tenderId=vm.TenderId});
 			}
             return RedirectToAction("Index","Tender");
         }

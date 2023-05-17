@@ -26,7 +26,6 @@ namespace VehicleTenderCore.API.Controllers
             {
 				return Ok(result);
 			}
-
             return BadRequest(result);
         }
 

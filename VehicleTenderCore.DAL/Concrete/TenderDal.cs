@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using VehicleTender.Entity.Concrete;
 using VehicleTenderCore.Core.DataAccess.Repository;
 using VehicleTenderCore.DAL.Abstract;
@@ -25,10 +26,17 @@ namespace VehicleTenderCore.DAL.Concrete
 			_db = db;
 		}
 
+		/// <summary>
+		/// Başlamış ve Bitmemiş İhale Listesi Getirir
+		/// </summary>
+		/// <returns></returns>
 		public List<TenderListVM> GetAll()
 		{
+			_db.Database.ExecuteSqlRaw("Exec TenderGetirilirkenTariheGoreDurumGuncelle");
 			return (from tender in _db.Tenders
 					join tenderStatus in _db.TenderStatus on tender.TenderStatusId equals tenderStatus.Id
+					where tender.IsActive == true && tender.StartDateTime <= DateTime.Now && tender.EndDateTime >= DateTime.Now
+					orderby tender.StartDateTime
 					select new TenderListVM()
 					{
 						TenderId = tender.Id,
@@ -40,11 +48,17 @@ namespace VehicleTenderCore.DAL.Concrete
 					}).ToList();
 		}
 
+		/// <summary>
+		/// Kullanıcı Tipine Göre İhale Listesi Getirir
+		/// </summary>
+		/// <param name="usertype"></param>
+		/// <returns></returns>
 		public List<TenderListVM> GetAllByUserType(int usertype)
 		{
+			_db.Database.ExecuteSqlRaw("Exec TenderGetirilirkenTariheGoreDurumGuncelle");
 			return (from tender in _db.Tenders
 					join tenderStatus in _db.TenderStatus on tender.TenderStatusId equals tenderStatus.Id
-					where tender.TenderTypeId == usertype
+					where tender.TenderTypeId == usertype && tender.IsActive == true && tender.StartDateTime <= DateTime.Now && tender.EndDateTime >= DateTime.Now
 					select new TenderListVM()
 					{
 						TenderId = tender.Id,
@@ -52,6 +66,7 @@ namespace VehicleTenderCore.DAL.Concrete
 						StartDateTime = tender.StartDateTime,
 						TenderName = tender.TenderName,
 						TenderStatusName = tenderStatus.Name,
+						TenderType = tender.TenderTypeId
 					}).ToList();
 		}
 
@@ -95,7 +110,6 @@ namespace VehicleTenderCore.DAL.Concrete
 
 		}
 
-
 		/// <summary>
 		/// İhale Id ye göre detayları getirir
 		/// </summary>
@@ -110,6 +124,7 @@ namespace VehicleTenderCore.DAL.Concrete
 						EndDateTime = tender.EndDateTime,
 						StartDateTime = tender.StartDateTime,
 						TenderName = tender.TenderName,
+						TenderId = tender.Id,
 						UserId = tender.CreatedBy,
 						TenderStatusId = tender.TenderStatusId,
 						TenderTypeId = tender.TenderTypeId,
@@ -135,6 +150,11 @@ namespace VehicleTenderCore.DAL.Concrete
 					}).SingleOrDefault();
 		}
 
+		/// <summary>
+		/// Kurumsal Müşteriye ait İhale Listesi Getirir
+		/// </summary>
+		/// <param name="userId"></param>
+		/// <returns></returns>
 		public List<TenderListVM> GetAllByUserId(int userId)
 		{
 			return (from tender in _db.Tenders
@@ -149,7 +169,12 @@ namespace VehicleTenderCore.DAL.Concrete
 						TenderStatusName = tenderStatus.Name,
 					}).ToList();
 		}
-		// todo tenderdetail ıd yi düzelt
+
+		/// <summary>
+		/// İhaleye ait teklif geçmişini getirir
+		/// </summary>
+		/// <param name="tenderDetailId"></param>
+		/// <returns></returns>
 		public TenderOfferHistory GetForCorporate(int tenderDetailId)
 		{
 			return (from td in _db.TenderDetails

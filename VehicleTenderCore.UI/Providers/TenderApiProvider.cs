@@ -11,6 +11,7 @@ using VehicleTenderCore.UI.Providers.BaseType;
 
 namespace VehicleTenderCore.UI.Providers
 {
+	
     public class TenderApiProvider
     {
         private readonly HttpClient _httpClient;
@@ -23,25 +24,17 @@ namespace VehicleTenderCore.UI.Providers
         public async Task<GeneralDataType<List<TenderListVM>>> TenderGetAll(int id)
         {
             var result = await _httpClient.GetAsync($"Tender/GetAll/{id}");
-            if (result.IsSuccessStatusCode)
-            {
-                var data = JsonConvert.DeserializeObject<DataResult<List<TenderListVM>>>(await result.Content.ReadAsStringAsync());
-                return new GeneralDataType<List<TenderListVM>>(data.Message, result.StatusCode, data.Data);
-            }
-            return new GeneralDataType<List<TenderListVM>>("Hata", result.StatusCode, null); ;
+
+			return await new ApiProviderBaseClass().DataReturn<List<TenderListVM>>(result);
         }
 
         public async Task<GeneralDataType<List<TenderListVM>>> TenderGetAllByUserId(int id)
         {
             var result = await _httpClient.GetAsync($"Tender/GetAllByUserId/{id}");
-            if (result.IsSuccessStatusCode)
-            {
-                var data = JsonConvert.DeserializeObject<DataResult<List<TenderListVM>>>(await result.Content.ReadAsStringAsync());
-                return new GeneralDataType<List<TenderListVM>>(data.Message, result.StatusCode, data.Data);
-            }
-            return new GeneralDataType<List<TenderListVM>>("hata", result.StatusCode, null); ;
-        }
 
+            return await new ApiProviderBaseClass().DataReturn<List<TenderListVM>>(result);
+			
+        }
 
     }
 }

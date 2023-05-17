@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VehicleTender.Entity.Enum;
+using VehicleTenderCore.Core.Hashing;
 using VehicleTenderCore.DAL.Abstract;
 using VehicleTenderCore.DAL.Context;
 using VehicleTenderCore.Entities.View;
@@ -20,7 +21,7 @@ namespace VehicleTenderCore.DAL.Concrete
         public SessionVMForUser CheckCorporateCustomer(CorporateCustomerLoginVM vm)
         {
             var result = (from user in _db.CorporateCustomers
-                where user.Email == vm.Email && user.PasswordHash == vm.Password
+                where user.Email == vm.Email && user.PasswordHash == new MyHash().HashPassword(vm.Password)
                 select new SessionVMForUser()
                 {
                     Email = user.Email,

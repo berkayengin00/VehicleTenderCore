@@ -1,5 +1,6 @@
 ﻿@{
 	Layout = "_LoginLayout";
+	var errorMessage = TempData["Error"]?.ToString();
 }
 @model (RetailCustomerLoginVM,CorporateCustomerLoginVM)
 
@@ -28,7 +29,9 @@
 									<a href="#" class="h1"><b>Araç </b>İhale</a>
 								</div>
 								<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-
+									<div style="backgorund-color=red;" class="text-center">
+										<span class="badge bg-danger">@errorMessage</span>
+									</div>
 									<div>
 
 										<form asp-action="LoginRetail" asp-controller="Login" method="post">

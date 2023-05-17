@@ -10,7 +10,17 @@ namespace VehicleTenderCore.UI.Providers.BaseType
         {
             Data = data;
         }
-    }
+
+        /// <summary>
+        /// Datanın default değerini döndürür.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="statusCode"></param>
+        public GeneralDataType(string message, HttpStatusCode statusCode) : base(message, statusCode)
+        {
+	        Data = default(T);
+        }
+	}
 
     public class GeneralType
     {

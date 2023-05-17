@@ -79,10 +79,8 @@ namespace VehicleTenderCore.UI
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
+            app.UseStatusCodePagesWithReExecute("/Error/Page{0}");
+            
             app.UseStaticFiles();
 
             app.UseRouting();

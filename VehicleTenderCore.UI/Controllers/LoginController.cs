@@ -31,12 +31,12 @@ namespace VehicleTenderCore.UI.Controllers
             var user = await _loginApiProvider.CheckRetailCustomerAsync(vm);
             if (user.StatusCode == HttpStatusCode.OK)
             {
-	            AuthenticationAsync(user.Data);
+	            await AuthenticationAsync(user.Data);
 				HttpContext.Session.MySessionSet("user", user.Data);
                 return RedirectToAction("Index","Tender");
             }
-
-            return BadRequest(user.Message);
+            TempData.Add("Error",user.Message);
+            return RedirectToAction("Login");
         }
         
 
@@ -50,7 +50,8 @@ namespace VehicleTenderCore.UI.Controllers
                 HttpContext.Session.MySessionSet("user", user.Data);
                 return RedirectToAction("Index", "Tender");
             }
-            return BadRequest(user.Message);
+            TempData.Add("Error", user.Message);
+			return RedirectToAction("Login");
         }
 
         [NonAction]
