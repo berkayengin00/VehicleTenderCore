@@ -31,6 +31,7 @@ namespace VehicleTenderCore.UI.Controllers
             return RedirectToAction("Index","Tender");
         }
 
+
         [HttpGet]
         public async Task<IActionResult> GetForCorporate(int tenderId)
         {
