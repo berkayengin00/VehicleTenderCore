@@ -12,5 +12,6 @@ namespace VehicleTenderCore.Entities.View
         public int UserId { get; set; }
         public string Email { get; set; }
         public int UserType { get; set; }
+        public string Token { get; set; }
     }
 }

@@ -1,0 +1,36 @@
+﻿@model VehicleTenderCore.Entities.View.TenderHistory.TenderOfferHistory
+
+<div style="margin-top:125px;"></div>
+
+<div class="mb-5">
+	<div class="d-flex justify-content-around">
+		<label asp-for="TenderName" class="text-decoration-underline font-weight-bold text-uppercase"></label>
+		<label asp-for="StartDateTime" class="text-decoration-underline font-weight-bold text-uppercase"></label>
+		<label asp-for="EndDateTime" class="text-decoration-underline font-weight-bold text-uppercase"></label>
+	</div>
+	<div class="d-flex justify-content-around">
+		<label>@Model.TenderName</label>
+		<label>@Model.StartDateTime</label>
+		<label>@Model.EndDateTime</label>
+	</div>
+</div>
+
+<div>
+	<table class="table">
+		<thead>
+		<th>Fiyat</th>
+		<th>Tarih</th>
+		<th>İstenilen Fiyat İle Teklif Arasındaki Fark (İstenilen Fiyat : @Model.TenderMinPrice)</th>
+		</thead>
+		<tbody>
+		@foreach (var item in Model.TenderOfferList)
+		{
+			<tr>
+				<td>@item.Price</td>
+				<td>@item.AddedDate</td>
+					<td>@(Model.TenderMinPrice < item.Price ? (item.Price - Model.TenderMinPrice) + " TL Fazla" : (item.Price - Model.TenderMinPrice) + " TL Az")</td>
+			</tr>
+		}	
+		</tbody>
+	</table>
+</div>

@@ -1,0 +1,167 @@
+﻿@using System.Runtime.Serialization
+@using Microsoft.AspNetCore.Http
+@model VehicleTenderCore.Entities.View.TenderDetail.TenderDetailListVM
+
+@using VehicleTenderCore.UI.Extensions
+
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+	var user = HttpContextAccessor.HttpContext?.Session.MySessionGet<SessionVMForUser>("user");
+}
+
+<div style="margin-top:125px;"></div>
+
+<div class="mb-5">
+	<div class="d-flex justify-content-around">
+		<label asp-for="TenderName" class="text-decoration-underline font-weight-bold text-uppercase"></label>
+		<label asp-for="StartDateTime" class="text-decoration-underline font-weight-bold text-uppercase"></label>
+		<label asp-for="EndDateTime" class="text-decoration-underline font-weight-bold text-uppercase"></label>
+	</div>
+	<div class="d-flex justify-content-around">
+		<label>@Model.TenderName</label>
+		<label>@Model.StartDateTime</label>
+		<label>@Model.EndDateTime</label>
+	</div>
+</div>
+
+@{
+	int sayac = 0;
+}
+
+@foreach (var item in Model.TenderAndVehicleDetailList)
+{
+	<div class="row mb-5">
+		<div id="carouselExampleControls@(sayac)" class="carousel slide col-md-7" data-ride="carousel">
+			<div class="carousel-inner">
+				@foreach (var image in item.VehicleImages)
+				{
+					<div class="carousel-item @if (image == item.VehicleImages[0]) {
+			<text>active</text>
+}">
+						<img class="d-block w-100" src="http://localhost:33901/@image" alt="First slide style=" height="400px;">
+					</div>
+				}
+				@if (item.VehicleImages.Count == 0)
+				{
+					<div class="carousel-item active">
+						<img class="d-block w-100" src="/TemplateContent/img/DbAddedImg/default_car.jpg" alt="First slide style=" height="400px;">
+					</div>
+				}
+			</div>
+			<a class="carousel-control-prev" href="#carouselExampleControls@(sayac)" role="button" data-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+			<a class="carousel-control-next" href="#carouselExampleControls@(sayac++)" role="button" data-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>
+		</div>
+
+		<div class="col-md-4 border p-3">
+			<div class="d-flex flex-column bd-highlight mb-3">
+				<div>
+					<div class="d-flex justify-content-between bd-highlight mb-5">
+						<pre>Araç Plaka</pre>
+						<p style="font-size:30px;">@item.LicencePlate</p>
+					</div>
+					<div class="d-flex justify-content-between bd-highlight mb-5">
+						<pre>İhale Fiyatı</pre>
+						<p style="font-size:30px;">@item.StartPrice</p>
+					</div>
+					<div class="d-flex justify-content-between bd-highlight mt-5">
+						<pre>Teklif Edilen Fiyat</pre>
+						<p style="font-size:30px;">@item.OfferPrice</p>
+					</div>
+				</div>
+				<div class="mt-5">
+					<form asp-controller="TenderHistory" asp-action="Add" method="post">
+						<input type="hidden" name="TenderDetailId" value="@item.TenderDetailId" />
+						<input type="hidden" name="TenderId" value="@Model.TenderId" />
+						
+						@if (Model.UserId != user.UserId)
+						{
+							<div class="d-flex justify-content-between bd-highlight mb-3">
+								<pre>Teklif Ver</pre>
+								<input name="Price" type="number" class="form-control col-md-6" min="@(item.OfferPrice==0 ? (int)item.StartPrice+1: (int)item.OfferPrice+1)" required="true" />
+							</div>
+							<div class="d-flex justify-content-end bd-highlight mb-6">
+								<button type="button" class="btn btn-outline-warning col-md-6 butonClass mr-1" data-id="@item.VehicleId">Araç Detayları</button>
+								<input type="submit" class="btn btn-success col-md-6" value="Teklif Ver"/>
+
+							</div>
+						}
+						else
+						{
+							<div class="d-flex justify-content-end bd-highlight mb-3">
+								<button type="button" class="btn btn-outline-warning col-md-6 butonClass" data-id="@item.VehicleId">Araç Detayları</button>
+								<a href="@Url.Action("GetForCorporate", "TenderHistory", new { @tenderId = item.TenderDetailId })" class="btn btn-primary col-md-6">İhale Detay</a>
+							</div>
+						}
+						
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+}
+
+<div class="modal fade" id="modalId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<table class="table">
+				<thead>
+					<tr>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody id="tableBody">
+					<!-- Veriler buraya gelecek -->
+				</tbody>
+			</table>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts
+	{
+	<script>
+		$(document).ready(function () {
+			$(".butonClass").click(function () {
+				// Ajax çağrısı yaparak, dropdown verilerini alıyoruz
+				var vehicleId = $(this).data("id");
+				$.ajax({
+					url: "@Url.Action("Index", "Vehicle")",
+					type: "GET",
+					data: { vehicleId: vehicleId },
+					success: function (data) {
+						debugger;
+						$("#tableBody").empty();
+						var row = "<tr><td>Plaka</td><td>" + data.licensePlate + "</td></tr>";
+						row += "<tr><td>Marka</td><td>" + data.brandName + "</td></tr>";
+						row += "<tr><td>Model</td><td>" + data.modelName + "</td></tr>";
+						row += "<tr><td>Kasa Tipi</td><td>" + data.bodyTypeName + "</td></tr>";
+						row += "<tr><td>Vites Tipi</td><td>" + data.gearTypeName + "</td></tr>";
+						row += "<tr><td>Yakıt</td><td>" + data.fuelTypeName + "</td></tr>";
+						row += "<tr><td>Versiyon</td><td>" + data.version + "</td></tr>";
+						row += "<tr><td>Kilometre</td><td>" + data.kiloMeter + "</td></tr>";
+						row += "<tr><td>Açıklama</td><td>" + data.description + "</td></tr>";
+						$("#tableBody").append(row);
+
+						// Modal'ı açıyoruz
+						$("#modalId").modal("show");
+					},
+					error: function () {
+						alert("Bir hata oluştu!");
+					}
+				});
+			});
+		});
+	</script>
+}

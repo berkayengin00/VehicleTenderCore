@@ -1,0 +1,52 @@
+﻿
+@using VehicleTenderCore.Entities.View.Tender
+@using VehicleTender.Entity.Enum
+
+
+@model List<VehicleTenderCore.Entities.View.Tender.TenderListVM>
+
+
+<section class="w3l-grids-3 py-5">
+	<div class="container py-md-5" style="height:72vh;">
+		<div class="title-content text-left mb-lg-5 mb-4">
+			<h3 class="hny-title">İhaleler</h3>
+		</div>
+		<div class="row bottom-ab-grids">
+			<!--/row-grids-->
+			@foreach (TenderListVM item in Model)
+			{
+				@Html.HiddenFor(x => item.TenderId)
+				<div class="col-lg-6 subject-card mt-lg-0 mb-4">
+					<div class="subject-card-header p-4">
+						<a href="@Url.Action("GetByTenderId","TenderDetail",new {@tenderId=item.TenderId})" class="card_title p-lg-4d-block">
+							<div class="row align-items-center">
+								<div class="col-sm-5 subject-img">
+									@if (item.TenderType == (int)UserTypeEnum.Retired)
+									{
+										<img src="/img/retail.JPG" class="img-fluid" alt="">
+									}
+									else
+									{
+										<img src="/img/corparate.jpg" class="img-fluid" alt="">
+									}
+
+								</div>
+								<div class="col-sm-7 subject-content mt-sm-0 mt-4">
+									<h4>@item.TenderName</h4>
+									<p>@item.StartDateTime</p>
+									<p>@item.EndDateTime</p>
+									<div class="dst-btm">
+										<h6 class=""> @item.TenderStatusName </h6>
+										
+									</div>
+									@*<p class="sub-para">Per person on twin sharing</p>*@
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+			}
+			<!--//row-grids-->
+		</div>
+	</div>
+</section>

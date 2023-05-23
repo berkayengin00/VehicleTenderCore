@@ -5,11 +5,38 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\VehicleTenderCore.BLL\VehicleTenderCore.BLL.csproj" />
+    <ProjectReference Include="..\VehicleTenderCore.Core\VehicleTenderCore.Core.csproj" />
     <ProjectReference Include="..\VehicleTenderCore.Entities\VehicleTenderCore.Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="VehicleTender.Entity">
+      <HintPath>..\..\VehicleTender\VehicleTender.Entity\bin\Debug\VehicleTender.Entity.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Error\Page500.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Error\Page500.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\TenderHistory\GetTenderBidByUserId.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\TenderHistory\GetTenderBidByUserId.cshtml" />
   </ItemGroup>
 
 </Project>

@@ -7,7 +7,7 @@ using VehicleTenderCore.Entities.View;
 
 namespace VehicleTenderCore.DAL.Abstract
 {
-    public interface ICorporateCustomer
+    public interface ICorporateCustomerDal
     {
         SessionVMForUser CheckCorporateCustomer(CorporateCustomerLoginVM vm);
     }

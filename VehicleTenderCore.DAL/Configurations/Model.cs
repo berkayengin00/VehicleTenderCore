@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using VehicleTender.Entity.Concrete;
 
@@ -293,11 +287,6 @@ namespace VehicleTenderCore.DAL.Configurations
 
     public class TenderHistoryConfiguration : IEntityTypeConfiguration<TenderHistory>
     {
-        public TenderHistoryConfiguration()
-        {
-
-        }
-
         public void Configure(EntityTypeBuilder<TenderHistory> builder)
         {
             builder.ToTable("TenderHistory");
@@ -308,11 +297,6 @@ namespace VehicleTenderCore.DAL.Configurations
             builder.HasOne(x => x.User)
                 .WithMany()
                 .HasForeignKey(x => x.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasOne(x => x.Tender)
-                .WithMany()
-                .HasForeignKey(x => x.TenderId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }
@@ -487,5 +471,14 @@ namespace VehicleTenderCore.DAL.Configurations
             builder.ToTable("District");
             builder.Property(x => x.Name).HasMaxLength(100).IsRequired();
         }
+    }
+
+    public class FinishedTenderConfiguration : IEntityTypeConfiguration<FinishedTender>
+    {
+
+	    public void Configure(EntityTypeBuilder<FinishedTender> builder)
+	    {
+			builder.ToTable("FinishedTender");
+		}
     }
 }

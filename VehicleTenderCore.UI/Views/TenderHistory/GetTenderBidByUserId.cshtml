@@ -1,0 +1,64 @@
+﻿@using VehicleTender.Entity.Concrete
+@using VehicleTenderCore.Entities.View.TenderHistory
+@model List<VehicleTenderCore.Entities.View.TenderHistory.TenderDetailAndBidVM>
+
+<div>
+	@foreach (var item in Model)
+	{
+		<div class="mt-5">
+			<div class="d-flex justify-content-around">
+				<label asp-for="@item.TenderName" class="text-decoration-underline font-weight-bold text-uppercase"></label>
+				<label asp-for="@item.StartDateTime" class="text-decoration-underline font-weight-bold text-uppercase"></label>
+				<label asp-for="@item.EndDateTime" class="text-decoration-underline font-weight-bold text-uppercase"></label>
+			</div>
+			<div class="d-flex justify-content-around">
+				<label>@item.TenderName</label>
+				<label>@item.StartDateTime</label>
+				<label>@item.EndDateTime</label>
+			</div>
+
+			@foreach (var tenderDetail in item.TenderDetailForTenderOffers)
+			{
+				<div class="accordion" id="accordionExample">
+
+					<div class="card">
+						<div class="card-header" id="headingTwo">
+							<h2 class="mb-0">
+								<button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse@(tenderDetail.LicensePlate)" aria-expanded="false" aria-controls="collapseTwo">
+									<div class="d-flex justify-content-around">
+										<label asp-for="@tenderDetail.Model" class="text-decoration-underline font-weight-bold text-uppercase"></label>
+										<label asp-for="@tenderDetail.Brand" class="text-decoration-underline font-weight-bold text-uppercase"></label>
+										<label asp-for="@tenderDetail.LicensePlate" class="text-decoration-underline font-weight-bold text-uppercase"></label>
+									</div>
+									<div class="d-flex justify-content-around">
+										<label>@tenderDetail.Model</label>
+										<label>@tenderDetail.Brand</label>
+										<label>@tenderDetail.LicensePlate</label>
+									</div>
+								</button>
+							</h2>
+						</div>
+						<div id="collapse@(tenderDetail.LicensePlate)" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+							<div class="card-body">
+								@foreach (var offer in tenderDetail.TenderBidList)
+								{
+									<div class="d-flex justify-content-around">
+										<label asp-for="@offer.Price" class="text-decoration-underline font-weight-bold text-uppercase"></label>
+										<label asp-for="@offer.AddedDate" class="text-decoration-underline font-weight-bold text-uppercase"></label>
+									</div>
+									<div class="d-flex justify-content-around">
+										<label>@offer.Price</label>
+										<label>@offer.AddedDate</label>
+									</div>
+									<hr />
+								}
+							</div>
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+	}
+
+</div>
+

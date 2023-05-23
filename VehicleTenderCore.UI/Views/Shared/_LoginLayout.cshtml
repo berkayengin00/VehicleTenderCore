@@ -1,19 +1,23 @@
-﻿<!DOCTYPE html>
-
-<html>
+﻿<!doctype html>
+<html lang="en">
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="~/css/site.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="/login/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/login/assets/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/login/assets/css/style.css" rel="stylesheet">
+	<link href="/css/login.css" rel="stylesheet">
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <title>Araç İhale</title>
 </head>
 <body>
-<div>
-	@RenderBody()
-</div>
+    @RenderBody()
 </body>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
-@await RenderSectionAsync("Scripts", required: false)
 </html>

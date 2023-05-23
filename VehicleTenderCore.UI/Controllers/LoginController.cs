@@ -1,8 +1,13 @@
 ﻿using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using VehicleTenderCore.Entities.View;
+using VehicleTenderCore.UI.Extensions;
 using VehicleTenderCore.UI.Providers;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 
 namespace VehicleTenderCore.UI.Controllers
 {
@@ -26,10 +31,12 @@ namespace VehicleTenderCore.UI.Controllers
             var user = await _loginApiProvider.CheckRetailCustomerAsync(vm);
             if (user.StatusCode == HttpStatusCode.OK)
             {
-                return RedirectToAction("Login");
+	            await AuthenticationAsync(user.Data);
+				HttpContext.Session.MySessionSet("user", user.Data);
+                return RedirectToAction("Index","Tender");
             }
-
-            return BadRequest(user.Message);
+            TempData.Add("Error",user.Message);
+            return RedirectToAction("Login");
         }
         
 
@@ -39,10 +46,32 @@ namespace VehicleTenderCore.UI.Controllers
             var user = await _loginApiProvider.CheckCorporateCustomerAsync(vm);
             if (user.StatusCode == HttpStatusCode.OK)
             {
-                return RedirectToAction("Login");
+	            AuthenticationAsync(user.Data);
+                HttpContext.Session.MySessionSet("user", user.Data);
+                return RedirectToAction("Index", "Tender");
             }
-
-            return BadRequest(user.Message);
+            TempData.Add("Error", user.Message);
+			return RedirectToAction("Login");
         }
+
+        [NonAction]
+        public async Task AuthenticationAsync(SessionVMForUser vm)
+        {
+	        var claims = new[] { new Claim(ClaimTypes.Name, vm.Email) };
+
+	        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+	        await HttpContext.SignInAsync(
+		        CookieAuthenticationDefaults.AuthenticationScheme,
+		        new ClaimsPrincipal(identity));
+		}
+
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+	        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+	        HttpContext.Session.Clear();
+	        return RedirectToAction("Login");
+		}
     }
 }

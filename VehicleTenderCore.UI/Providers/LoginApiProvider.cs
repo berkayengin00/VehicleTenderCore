@@ -1,7 +1,9 @@
 ﻿using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using VehicleTenderCore.Core.Result;
 using VehicleTenderCore.Entities.View;
 using VehicleTenderCore.UI.Providers.BaseType;
 
@@ -10,27 +12,21 @@ namespace VehicleTenderCore.UI.Providers
     public class LoginApiProvider
     {
         private readonly HttpClient _httpClient;
-        public LoginApiProvider(HttpClient client)
+        private readonly IApiProvider _apiProvider;
+        public LoginApiProvider(HttpClient client, IApiProvider apiProvider) 
         {
             _httpClient = client;
+            _apiProvider = apiProvider;
         }
 
-        public async Task<GeneralType> CheckRetailCustomerAsync(RetailCustomerLoginVM vm)
+        public async Task<GeneralDataType<SessionVMForUser>> CheckRetailCustomerAsync(RetailCustomerLoginVM vm)
         {
-            var result = await _httpClient.PostAsync("Login/LoginRetail", new StringContent(JsonConvert.SerializeObject(vm), Encoding.UTF8, "application/json"));
-
-            var data = JsonConvert.DeserializeObject<SessionVMForUser>(await result.Content.ReadAsStringAsync());
-
-            return new GeneralType( result.RequestMessage?.ToString(),result.StatusCode);
+	        return await _apiProvider.ResultReturnPost<SessionVMForUser>(_httpClient,vm, "Login/LoginRetail","Kayıtlı Bireysel Kullanıcı Bulunamadı");
         }
 
-        public async Task<GeneralType> CheckCorporateCustomerAsync(CorporateCustomerLoginVM vm)
+        public async Task<GeneralDataType<SessionVMForUser>> CheckCorporateCustomerAsync(CorporateCustomerLoginVM vm)
         {
-            var result = await _httpClient.PostAsync("Login/LoginCorporate", new StringContent(JsonConvert.SerializeObject(vm), Encoding.UTF8, "application/json"));
-
-            var data = JsonConvert.DeserializeObject<SessionVMForUser>(await result.Content.ReadAsStringAsync());
-
-            return new GeneralType(result.RequestMessage?.ToString(), result.StatusCode);
+	        return await _apiProvider.ResultReturnPost<SessionVMForUser>(_httpClient,vm, "Login/LoginCorporate","Kayıtlı Kurumsal Kullanıcı Bulunamadı");
         }
     }
 }

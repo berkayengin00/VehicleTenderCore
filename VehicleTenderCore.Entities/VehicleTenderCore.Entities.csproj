@@ -10,6 +10,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="VehicleTender.Entity">
       <HintPath>..\..\VehicleTender\VehicleTender.Entity\bin\Debug\VehicleTender.Entity.dll</HintPath>
     </Reference>
