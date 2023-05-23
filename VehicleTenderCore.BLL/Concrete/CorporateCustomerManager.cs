@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VehicleTenderCore.BLL.Abstract;
+using VehicleTenderCore.BLL.JWT;
 using VehicleTenderCore.Core.Result;
 using VehicleTenderCore.DAL.Abstract;
 using VehicleTenderCore.Entities.View;

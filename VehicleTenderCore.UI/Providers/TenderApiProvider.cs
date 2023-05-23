@@ -15,15 +15,17 @@ namespace VehicleTenderCore.UI.Providers
     public class TenderApiProvider
     {
         private readonly HttpClient _httpClient;
+        private readonly IApiProvider _apiProvider;
 
-        public TenderApiProvider(HttpClient client)
+        public TenderApiProvider(HttpClient client,IApiProvider apiProvider)
         {
             _httpClient = client;
+            _apiProvider = apiProvider;
         }
 
         public async Task<GeneralDataType<List<TenderListVM>>> TenderGetAll(int id)
         {
-            return await new ApiProviderBaseClass().DataReturnGet<List<TenderListVM>>(_httpClient, "Tender/GetAll/",id);
+            return await _apiProvider.DataReturnGet<List<TenderListVM>>(_httpClient, "Tender/GetAll/",id);
    //         var result = await _httpClient.GetAsync($"Tender/GetAll/{id}");
 
 			//return await new ApiProviderBaseClass().DataReturn<List<TenderListVM>>(result);
@@ -31,7 +33,7 @@ namespace VehicleTenderCore.UI.Providers
 
         public async Task<GeneralDataType<List<TenderListVM>>> TenderGetAllByUserId(int id)
         {
-            return await new ApiProviderBaseClass().DataReturnGet<List<TenderListVM>>(_httpClient, "Tender/GetAllByUserId/", id);
+            return await _apiProvider.DataReturnGet<List<TenderListVM>>(_httpClient, "Tender/GetAllByUserId/", id);
             //var result = await _httpClient.GetAsync($"Tender/GetAllByUserId/{id}");
 
             //return await new ApiProviderBaseClass().DataReturn<List<TenderListVM>>(result);

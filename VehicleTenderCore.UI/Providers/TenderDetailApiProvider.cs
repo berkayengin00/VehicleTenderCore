@@ -15,21 +15,22 @@ namespace VehicleTenderCore.UI.Providers
     public class TenderDetailApiProvider
     {
         private readonly HttpClient _httpClient;
-
-        public TenderDetailApiProvider(HttpClient client)
+        private IApiProvider _apiProvider;
+        public TenderDetailApiProvider(HttpClient client, IApiProvider apiProvider)
         {
             _httpClient = client;
+            _apiProvider = apiProvider;
         }
 
         public async Task<GeneralType> TenderAndDetailAddAsync(RetailCustomerLoginVM vm)
         {
-	        return await new ApiProviderBaseClass().ResultReturnPost(_httpClient, vm, "TenderDetail/Add");
+	        return await _apiProvider.ResultReturnPost(_httpClient, vm, "TenderDetail/Add");
 
         }
 
         public async Task<GeneralDataType<TenderDetailListVM>> TenderDetailsGet(int id)
         {
-            return await new ApiProviderBaseClass().DataReturnGet<TenderDetailListVM>(_httpClient, "TenderDetail/getbyid/", id);
+            return await _apiProvider.DataReturnGet<TenderDetailListVM>(_httpClient, "TenderDetail/getbyid/", id);
         }
 
     }

@@ -2,9 +2,11 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using VehicleTender.Entity.Enum;
 using VehicleTenderCore.Entities.View;
 using VehicleTenderCore.Entities.View.TenderHistory;
 using VehicleTenderCore.UI.Extensions;
+using VehicleTenderCore.UI.Filters;
 using VehicleTenderCore.UI.Providers;
 
 namespace VehicleTenderCore.UI.Controllers
@@ -41,6 +43,20 @@ namespace VehicleTenderCore.UI.Controllers
 		        return View(result.Data);
 	        }
 	        return RedirectToAction("Index", "Tender");
+        }
+
+        [HttpGet]
+        [CheckRole((int)UserTypeEnum.Corporate)]
+        public async Task<IActionResult> GetTenderBidByUserId(int userId)
+        {
+            var result =await _tenderHistoryApiProvider.GetTenderDetailAndBid(userId);
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+	            return View(result.Data);
+            }
+
+            return RedirectToAction("Page500","Error");
+
         }
 
 	}

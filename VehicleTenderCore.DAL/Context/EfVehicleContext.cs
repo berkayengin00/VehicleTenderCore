@@ -63,6 +63,7 @@ namespace VehicleTenderCore.DAL.Context
         public DbSet<Province> Province { get; set; }
         public DbSet<District> District { get; set; }
         public DbSet<VehiclePartStatus> VehiclePartStatus { get; set; }
+        public DbSet<FinishedTender> FinishedTenders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -108,6 +109,7 @@ namespace VehicleTenderCore.DAL.Context
             modelBuilder.ApplyConfiguration(new VehiclePartStatusConfiguration());
             modelBuilder.ApplyConfiguration(new ProvinceConfiguration());
             modelBuilder.ApplyConfiguration(new DistrictConfiguration());
+            modelBuilder.ApplyConfiguration(new FinishedTenderConfiguration());
 
         }
     }

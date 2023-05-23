@@ -11,5 +11,6 @@ namespace VehicleTenderCore.BLL.Abstract
     public interface ITenderHistoryService
     {
         Result Add(TenderOfferAddVM vm);
+        DataResult<List<TenderDetailAndBidVM>> GetTenderDetailAndBid(int userId);
     }
 }

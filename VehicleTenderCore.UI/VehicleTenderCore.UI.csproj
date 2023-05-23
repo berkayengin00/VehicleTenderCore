@@ -23,15 +23,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\TenderHistory\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <UpToDateCheckInput Remove="Views\Error\Page500.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Views\Error\Page500.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\TenderHistory\GetTenderBidByUserId.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\TenderHistory\GetTenderBidByUserId.cshtml" />
   </ItemGroup>
 
 </Project>

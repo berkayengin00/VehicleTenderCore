@@ -15,6 +15,7 @@ using VehicleTenderCore.BLL.Mapper;
 using VehicleTenderCore.DAL.Abstract;
 using VehicleTenderCore.DAL.Concrete;
 using VehicleTenderCore.UI.Providers;
+using VehicleTenderCore.UI.Providers.BaseType;
 
 namespace VehicleTenderCore.UI
 {
@@ -30,7 +31,9 @@ namespace VehicleTenderCore.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHttpClient<LoginApiProvider>(x =>
+	        services.AddScoped<IApiProvider, ApiProviderBaseClass>();
+	        services.AddHttpContextAccessor();
+			services.AddHttpClient<LoginApiProvider>(x =>
             {
                 x.BaseAddress = new Uri(Configuration["apiBaseUrl"]);
             });
@@ -56,7 +59,7 @@ namespace VehicleTenderCore.UI
             {
                 x.BaseAddress = new Uri(Configuration["apiBaseUrl"]);
             });
-            services.AddHttpContextAccessor();
+            
             services.AddSession(options =>
             {
                 options.Cookie.Name = "MyApp.Session";

@@ -61,6 +61,7 @@ namespace VehicleTenderCore.UI.Controllers
 			return BadRequest();
 		}
 
+		[NonAction]
 		private SessionVMForUser GetUserBySession()
 		{
 			return SessionExtension.MySessionGet<SessionVMForUser>(HttpContext.Session, "user");

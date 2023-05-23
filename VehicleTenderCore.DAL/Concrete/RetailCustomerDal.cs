@@ -24,10 +24,15 @@ namespace VehicleTenderCore.DAL.Concrete
             _db = db;
         }
 
+        /// <summary>
+        /// Sistemde kayıtlı bir Bireysel kullanıcı var mı kontrol eder. Geriye SessionVMForUser tipinde bir nesne döner.
+        /// </summary>
+        /// <param name="vm"></param>
+        /// <returns></returns>
         public SessionVMForUser CheckRetailCustomer(RetailCustomerLoginVM vm)
         {
             var result = (from user in _db.RetailCustomers
-                          where user.Email == vm.Email && user.PasswordHash == new MyHash().HashPassword(vm.Password)
+                          where user.Email == vm.Email && user.PasswordHash == new MyHash().HashPassword(vm.Password) && user.IsVerify
                           select new SessionVMForUser()
                           {
                               Email = user.Email,

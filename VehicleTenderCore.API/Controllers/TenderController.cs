@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VehicleTenderCore.BLL.Abstract;
 using VehicleTenderCore.Entities.View;
@@ -15,6 +16,7 @@ namespace VehicleTenderCore.API.Controllers
             _tenderService = tenderService;
         }
 
+        [Authorize]
         [HttpGet("getall/{id}")]
         public IActionResult GetAll(int id)
         {

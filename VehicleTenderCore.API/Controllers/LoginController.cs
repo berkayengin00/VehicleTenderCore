@@ -1,8 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System;
 using VehicleTenderCore.BLL.Abstract;
+using VehicleTenderCore.BLL.JWT;
 using VehicleTenderCore.DAL.Abstract;
 using VehicleTenderCore.Entities.View;
+using Microsoft.Extensions.Options;
 
 namespace VehicleTenderCore.API.Controllers
 {
@@ -12,10 +18,12 @@ namespace VehicleTenderCore.API.Controllers
     {
         private readonly IRetailCustomerService _retailCustomerService;
         private readonly ICorporateCustomerService _corporateCustomerService;
-        public LoginController(IRetailCustomerService retailCustomerService, ICorporateCustomerService corporateCustomerService)
+		private IConfiguration _configuration;
+		public LoginController(IRetailCustomerService retailCustomerService, ICorporateCustomerService corporateCustomerService, IConfiguration configuration)
         {
             _retailCustomerService = retailCustomerService;
 			_corporateCustomerService = corporateCustomerService;
+            _configuration = configuration;
         }
 
         [HttpPost("loginretail")]
@@ -24,6 +32,7 @@ namespace VehicleTenderCore.API.Controllers
             var result = _retailCustomerService.CheckRetailCustomer(vm);
             if (result.IsSuccess)
             {
+	            result.Data.Token = new TokenHandler(_configuration).GetJwtToken(result.Data);
 				return Ok(result);
 			}
             return BadRequest(result);
@@ -32,12 +41,16 @@ namespace VehicleTenderCore.API.Controllers
         [HttpPost("logincorporate")]
         public IActionResult Login([FromBody] CorporateCustomerLoginVM vm)
         {
-            var result = _corporateCustomerService.CheckCorporateCustomer(vm);
+	        var result = _corporateCustomerService.CheckCorporateCustomer(vm);
             if (result.IsSuccess)
             {
+	            result.Data.Token = new TokenHandler(_configuration).GetJwtToken(result.Data);
+                
 	            return Ok(result);
             }
             return BadRequest(result);
         }
+
+
     }
 }

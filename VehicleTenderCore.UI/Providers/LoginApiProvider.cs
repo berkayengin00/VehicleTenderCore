@@ -12,19 +12,21 @@ namespace VehicleTenderCore.UI.Providers
     public class LoginApiProvider
     {
         private readonly HttpClient _httpClient;
-        public LoginApiProvider(HttpClient client)
+        private readonly IApiProvider _apiProvider;
+        public LoginApiProvider(HttpClient client, IApiProvider apiProvider) 
         {
             _httpClient = client;
+            _apiProvider = apiProvider;
         }
 
         public async Task<GeneralDataType<SessionVMForUser>> CheckRetailCustomerAsync(RetailCustomerLoginVM vm)
         {
-	        return await new ApiProviderBaseClass().ResultReturnPost<SessionVMForUser>(_httpClient,vm, "Login/LoginRetail","Kayıtlı Bireysel Kullanıcı Bulunamadı");
+	        return await _apiProvider.ResultReturnPost<SessionVMForUser>(_httpClient,vm, "Login/LoginRetail","Kayıtlı Bireysel Kullanıcı Bulunamadı");
         }
 
         public async Task<GeneralDataType<SessionVMForUser>> CheckCorporateCustomerAsync(CorporateCustomerLoginVM vm)
         {
-	        return await new ApiProviderBaseClass().ResultReturnPost<SessionVMForUser>(_httpClient,vm, "Login/LoginCorporate","Kayıtlı Kurumsal Kullanıcı Bulunamadı");
+	        return await _apiProvider.ResultReturnPost<SessionVMForUser>(_httpClient,vm, "Login/LoginCorporate","Kayıtlı Kurumsal Kullanıcı Bulunamadı");
         }
     }
 }

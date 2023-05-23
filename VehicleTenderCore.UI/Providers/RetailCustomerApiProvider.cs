@@ -18,10 +18,10 @@ namespace VehicleTenderCore.UI.Providers
 
         public async Task<GeneralType> RegisterAsync(RetailCustomerRegisterVM vm)
         {
-	        return await new ApiProviderBaseClass().ResultReturnPost(_httpClient, vm, "RetailCustomer/Register",
-		        "Kayıt Başarısız");
+	        //return await new ApiProviderBaseClass().ResultReturnPost(_httpClient, vm, "RetailCustomer/Register",
+		       // "Kayıt Başarısız");
             //var result = await _httpClient.PostAsync("RetailCustomer/Register", new StringContent(JsonConvert.SerializeObject(vm), Encoding.UTF8, "application/json"));
-
+            return null;
             //return await new ApiProviderBaseClass().ResultReturn(result);
         }
     }

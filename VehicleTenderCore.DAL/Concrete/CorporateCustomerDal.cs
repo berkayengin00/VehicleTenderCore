@@ -18,10 +18,17 @@ namespace VehicleTenderCore.DAL.Concrete
         {
             _db = db;
         }
+
+        /// <summary>
+        /// Sistemde kayıtlı Kurumsal Müşteri var mı kontrol eder.
+        /// Geriye Session bilgilerini döner.
+        /// </summary>
+        /// <param name="vm"></param>
+        /// <returns></returns>
         public SessionVMForUser CheckCorporateCustomer(CorporateCustomerLoginVM vm)
         {
             var result = (from user in _db.CorporateCustomers
-                where user.Email == vm.Email && user.PasswordHash == new MyHash().HashPassword(vm.Password)
+                where user.Email == vm.Email && user.PasswordHash == new MyHash().HashPassword(vm.Password) && user.IsVerify
                 select new SessionVMForUser()
                 {
                     Email = user.Email,

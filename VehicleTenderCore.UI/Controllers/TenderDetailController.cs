@@ -68,6 +68,7 @@ namespace VehicleTenderCore.UI.Controllers
 			return View();
 		}
 
+		[NonAction]
 		public int GetUserId()
 		{
 			return SessionExtension.MySessionGet<SessionVMForUser>(HttpContext.Session, "user").UserId;

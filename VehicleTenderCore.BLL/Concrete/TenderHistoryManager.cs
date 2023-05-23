@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Hangfire;
 using VehicleTender.Entity.Concrete;
 using VehicleTenderCore.BLL.Abstract;
 using VehicleTenderCore.Core.Result;
@@ -31,6 +33,21 @@ namespace VehicleTenderCore.BLL.Concrete
 	            return new Result("Teklif Verildi", true);
             }
             return new Result("Teklif Verilemedi", false);  
+        }
+
+        public DataResult<List<TenderDetailAndBidVM>> GetTenderDetailAndBid(int userId)
+        {
+	        var result = _tenderHistoryDal.GetTenderDetailAndBid(userId);
+	        if (result!=null)
+	        {
+		        return new DataResult<List<TenderDetailAndBidVM>>("",result, true);
+	        }
+	        return new DataResult<List<TenderDetailAndBidVM>>("", result, false);
+        }
+        
+        public void Test2()
+        {
+            _tenderHistoryDal.Test2();
         }
     }
 }

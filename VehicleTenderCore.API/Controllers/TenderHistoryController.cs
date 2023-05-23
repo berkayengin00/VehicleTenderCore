@@ -25,5 +25,16 @@ namespace VehicleTenderCore.API.Controllers
             }
             return BadRequest(result);
         }
+
+        [HttpGet("GetBidsByUserId/{userId}")]
+        public IActionResult GetAll(int userId)
+        {
+			var result = _tenderService.GetTenderDetailAndBid(userId);
+			if (result.IsSuccess)
+			{
+	            return Ok(result);
+			}
+			return BadRequest(result);
+		}
     }
 }
